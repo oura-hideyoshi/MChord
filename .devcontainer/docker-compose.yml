@@ -1,0 +1,22 @@
+version: '3.0'
+services:
+  mchord:
+    build: 
+      context: .
+      dockerfile: firebase/Dockerfile
+    volumes:
+      # Firebase files
+      - ../functions:/workspace/functions:cached
+      - ../public:/workspace/public:cached
+      - ../.firebaserc:/workspace/.firebaserc:cached
+      - ../firebase.json:/workspace/firebase.json:cached
+      - ../firestore.indexes.json:/workspace/firestore.indexes.json:cached
+      - ../firestore.rules:/workspace/firestore.rules:cached
+      - ../remoteconfig.template.json:/workspace/remoteconfig.template.json:cached
+      - ../storage.rules:/workspace/storage.rules:cached
+      - ../credentials:/workspace/credentials:cached
+      # VSCode settings
+      - ../.vscode:/workspace/.vscode:cached
+    env_file:
+      - firebase/.firebase.env
+    tty: true
