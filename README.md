@@ -1,5 +1,7 @@
-# setup
+# setup local env
 
 ## Next.js
 
-`docker-compose run nextjs-app npm i`
+1. `docker-compose run nextjs-app npm i`
+2. docker container内にて
+   1. `npx firebase login`

@@ -8,4 +8,8 @@ services:
     # command: sh -c "npm run dev"
     ports:
       - "3000:3000"
+      - "4000:4000" # emulator
+      # - "5000:5000" # emulator Hosting
+      - "5001:5001" # emulator Functions
+      - "9005:9005" # auth
     tty: true
