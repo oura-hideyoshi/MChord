@@ -3,11 +3,13 @@ services:
   firebase:
     build: .
     volumes:
-      - ./app:/usr/src/app
+      - ./:/usr/src/workspace
     ports:
       - 3000:3000
       - 4000:4000 # Emulator Suite UI
       - 5001:5001 # Clound Functions
+      - 8080:8080 # firestore
+      - 9000:9000 # database
       - 9099:9099 # Clound Functions
       - 9005:9005 # auth callback
     working_dir: /usr/src/workspace
