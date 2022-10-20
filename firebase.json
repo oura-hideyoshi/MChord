@@ -10,7 +10,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "./hosting/.next",
+    "public": "./hosting/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
