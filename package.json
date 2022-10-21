@@ -6,7 +6,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "change-account": "firebase logout && firebase login"
+    "change-account": "firebase logout && firebase login",
+    "firebase:hosting:preview":"cd hosting && yarn build && yarn preview"
   },
   "dependencies": {
     "firebase-tools": "^10.1.5"
