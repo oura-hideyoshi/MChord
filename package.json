@@ -1,0 +1,15 @@
+{
+  "name": "project-expenses",
+  "version": "1.0.0",
+  "description": "project expenses",
+  "private": true,
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "change-account": "firebase logout && firebase login",
+    "firebase:hosting:preview":"cd hosting && yarn && yarn build"
+  },
+  "dependencies": {
+    "firebase-tools": "^10.1.5"
+  }
+}
