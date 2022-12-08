@@ -1,0 +1,26 @@
+{
+  "const component": {
+    "scope": "typescriptreact",
+    "prefix": "cc",
+    "body": [
+      "import { ReactNode } from 'react'",
+      "",
+      "type Props = {",
+      "  children?: ReactNode",
+      "}",
+      "",
+      "export const $TM_FILENAME_BASE = ({ children, ...props }: Props) => {",
+      "",
+      "  return (",
+      "    <>",
+      "       $1",
+      "    </>",
+      "  )",
+      "}",
+      "",
+      "export default $TM_FILENAME_BASE",
+      ""
+    ],
+    "description": "Reactコンポーネントのテンプレート"
+  }
+}
