@@ -9,7 +9,7 @@
       "  children?: ReactNode",
       "}",
       "",
-      "export const $TM_FILENAME_BASE = ({ children, ...props }: Props) => {",
+      "const $TM_FILENAME_BASE = ({ children, ...props }: Props) => {",
       "",
       "  return (",
       "    <>",

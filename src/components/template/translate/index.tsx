@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Link from 'next/link'
 import { ReactNode, useState } from 'react'
 import CharCode from './char-code'
+import ChordView from './chord'
 import CreateChord from './create-chord'
 import UpperAndLower from './upper-and-lower'
 
@@ -12,6 +13,7 @@ export const TranslatePage = ({ ...props }) => {
     { label: 'char code', content: <CharCode /> },
     { label: 'translate', content: <UpperAndLower /> },
     { label: 'combine', content: <CreateChord /> },
+    { label: 'chord', content: <ChordView /> },
   ]
 
   return (
