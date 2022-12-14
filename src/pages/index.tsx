@@ -10,7 +10,10 @@ export const index: NextPage = () => {
       <nav>
         <List>
           <ListItem>
-            <Link href={'/translate'}>/translate</Link>
+            <Link href={'/dev/translate'}>/dev/translate</Link>
+          </ListItem>
+          <ListItem>
+            <Link href={'/dev/tonaljs'}>/dev/tonaljs</Link>
           </ListItem>
         </List>
       </nav>

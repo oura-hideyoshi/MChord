@@ -5,7 +5,7 @@ import {
   lettersTranslatable2Upper,
   transLetters2Lower,
   lettersTranslatable2Lower,
-} from '../../../utils/letters'
+} from '../../../../utils/letters'
 
 export const UpperAndLower = ({ ...props }) => {
   const [uppers, setUppers] = useState('')

@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, TextField, Typography } from '@mui/material'
 import { ReactNode, useState } from 'react'
-import { transLetters2Lower, transLetters2Upper } from '../../../utils/letters'
+import { transLetters2Lower, transLetters2Upper } from '../../../../utils/letters'
 
 type Props = {
   children?: ReactNode

@@ -2,7 +2,7 @@ import { TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { Chord } from '@tonaljs/tonal'
 import { ReactNode, useState } from 'react'
-import { transLetters2Lower, transLetters2Upper } from '../../../utils/letters'
+import { transLetters2Lower, transLetters2Upper } from '../../../../utils/letters'
 
 type Props = {
   children?: ReactNode
