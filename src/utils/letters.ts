@@ -10,7 +10,7 @@ const letter2upperMap: { [_ in charCodeTranslatable2Upper]: string } = {
   40: '⁽',
   41: '⁾',
   43: '⁺',
-  45: '-',
+  45: '⁻',
   48: '⁰',
   49: '¹',
   50: '²',
