@@ -1,5 +1,7 @@
 import { Box, Typography } from '@mui/material'
+import { Chord } from '@tonaljs/tonal'
 import { NextPage } from 'next'
+import ChordBlock from '../components/view/chord-block'
 
 export const index: NextPage = () => {
   return (
@@ -14,6 +16,7 @@ export const index: NextPage = () => {
         </Typography>
       </Typography>
       <Typography>A𝄬ₘ₇⁻⁵</Typography>
+      <ChordBlock chord={Chord.get('Cm7')} />
     </Box>
   )
 }
