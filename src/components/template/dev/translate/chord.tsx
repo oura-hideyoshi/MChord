@@ -11,8 +11,8 @@ type Props = {
 const ChordView = ({ children, ...props }: Props) => {
   const [state, setState] = useState(Chord.get('Cbm7'))
 
-  const base = state.tonic
-  const lower = transLetters2Lower(state.quality)
+  const base = state.tonic || ''
+  const lower = transLetters2Lower(state.aliases[0] || '')
   const upper = transLetters2Upper('')
   const chord = base + lower + upper
   return (
