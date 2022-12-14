@@ -1,22 +1,19 @@
-import { Box, Typography } from '@mui/material'
-import { Chord } from '@tonaljs/tonal'
+import { Box, List, ListItem, Typography } from '@mui/material'
 import { NextPage } from 'next'
-import ChordBlock from '../components/view/chord-block'
+import Link from 'next/link'
 
 export const index: NextPage = () => {
   return (
     <Box>
-      <Typography position={'relative'}>
-        A𝄬
-        <Typography variant={'caption'} position={'absolute'} top={-4}>
-          -5
-        </Typography>
-        <Typography variant={'caption'} position={'absolute'} bottom={-4}>
-          m7
-        </Typography>
-      </Typography>
-      <Typography>A𝄬ₘ₇⁻⁵</Typography>
-      <ChordBlock chord={Chord.get('Cm7')} />
+      <Typography variant="h1">Welcome to MChord</Typography>
+      <Typography>these are pages for development </Typography>
+      <nav>
+        <List>
+          <ListItem>
+            <Link href={'/translate'}>/translate</Link>
+          </ListItem>
+        </List>
+      </nav>
     </Box>
   )
 }
