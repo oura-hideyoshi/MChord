@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Link from 'next/link'
 import { ReactNode, useState } from 'react'
 import TonaljsChord from './chord'
+import TonaljsChordType from './chord-type'
 
 type Props = {
   children?: ReactNode
@@ -10,7 +11,10 @@ type Props = {
 const TonaljsPage = ({ children, ...props }: Props) => {
   const [index, setIndex] = useState(0)
 
-  const pages: { label: string; content: ReactNode }[] = [{ label: 'get', content: <TonaljsChord /> }]
+  const pages: { label: string; content: ReactNode }[] = [
+    { label: 'chord', content: <TonaljsChord /> },
+    { label: 'chord-type', content: <TonaljsChordType /> },
+  ]
 
   return (
     <Box>
