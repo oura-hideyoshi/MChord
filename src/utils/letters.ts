@@ -6,6 +6,7 @@
 type charCodeTranslatable2Upper = 40 | 41 | 43 | 45 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57
 type charCodeTranslatable2Lower = 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57
 type charCodeTranslatable2Roman = 49 | 50 | 51 | 52 | 53 | 54 | 55
+type charCodeTranslatable2Accidentals = 35 | 98
 
 const letter2upperMap: { [_ in charCodeTranslatable2Upper]: string } = {
   40: '⁽',
@@ -47,9 +48,15 @@ const letter2RomanMap: { [_ in charCodeTranslatable2Roman]: string } = {
   55: 'Ⅶ',
 }
 
+const letter2AccidentalMap: { [_ in charCodeTranslatable2Accidentals]: string } = {
+  35: '♯',
+  98: '𝄬',
+}
+
 export const lettersTranslatable2Upper = Object.keys(letter2upperMap).map((code) => String.fromCharCode(Number(code)))
 export const lettersTranslatable2Lower = Object.keys(letter2lowerMap).map((code) => String.fromCharCode(Number(code)))
 export const lettersTranslatable2Roman = Object.keys(letter2RomanMap).map((code) => String.fromCharCode(Number(code)))
+export const lettersTranslatable2Accidental = Object.keys(letter2AccidentalMap).map((code) => String.fromCharCode(Number(code)))
 
 export function transLetters2Upper(arg: string) {
   return Array.from(arg)
@@ -74,6 +81,15 @@ export function transLetters2Roman(arg: string) {
     .map((letter) => {
       const code = letter.charCodeAt(0)
       return letter2RomanMap[code as charCodeTranslatable2Roman] || letter
+    })
+    .join('')
+}
+
+export function transLetters2Accidental(arg: string) {
+  return Array.from(arg)
+    .map((letter) => {
+      const code = letter.charCodeAt(0)
+      return letter2AccidentalMap[code as charCodeTranslatable2Accidentals] || letter
     })
     .join('')
 }
