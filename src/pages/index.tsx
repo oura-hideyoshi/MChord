@@ -15,6 +15,9 @@ export const index: NextPage = () => {
           <ListItem>
             <Link href={'/dev/tonaljs'}>/dev/tonaljs</Link>
           </ListItem>
+          <ListItem>
+            <Link href={'/dev/input'}>/dev/input</Link>
+          </ListItem>
         </List>
       </nav>
     </Box>
