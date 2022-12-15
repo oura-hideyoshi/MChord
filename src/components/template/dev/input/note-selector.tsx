@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 import { ReactNode, useState } from 'react'
-import { transLetters2Accidental } from '../../../../utils/letters'
 import NoteSelector from '../../../inputs/note'
 
 type Props = {
@@ -13,7 +12,7 @@ const NoteSelectorView = ({ children, ...props }: Props) => {
   return (
     <Box>
       <NoteSelector onChange={(value) => setState(value)} />
-      <Typography fontSize={'5rem'}>{transLetters2Accidental(state)}</Typography>
+      <Typography fontSize={'5rem'}>{state}</Typography>
     </Box>
   )
 }
