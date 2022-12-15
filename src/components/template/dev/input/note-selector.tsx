@@ -1,14 +1,12 @@
-import { Box, Typography } from '@mui/material'
-import { ReactNode, useState } from 'react'
-import DegreeSelector from '../../../inputs/degree'
-import NoteSelector from '../../../inputs/note'
+import { Box, Button, Typography } from '@mui/material'
+import { useState } from 'react'
+import { ChordTypeSelector, DegreeSelector, NoteSelector } from '../../../inputs'
 
-type Props = {
-  children?: ReactNode
-}
+type Props = {}
 
-const NoteSelectorView = ({ children, ...props }: Props) => {
-  const [state, setState] = useState({ note: '', degree: '' })
+const NoteSelectorView = ({ ...props }: Props) => {
+  const [state, setState] = useState({ note: '', degree: '', chordType: '' })
+  const [open, setOpen] = useState(false)
 
   return (
     <Box>
@@ -16,6 +14,9 @@ const NoteSelectorView = ({ children, ...props }: Props) => {
       <Typography fontSize={'5rem'}>{state.note}</Typography>
       <DegreeSelector onChange={(value) => setState({ ...state, degree: value })} />
       <Typography fontSize={'5rem'}>{state.degree}</Typography>
+      <Button onClick={() => setOpen(true)}>open</Button>
+      <ChordTypeSelector open={open} onClose={() => setOpen(false)} />
+      <Typography fontSize={'5rem'}>{state.chordType}</Typography>
     </Box>
   )
 }
