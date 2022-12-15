@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, TextField, Typography } from '@mui/material'
 import { ReactNode, useState } from 'react'
-import { transLetters2Lower, transLetters2Upper } from '../../../../utils/letters'
+import { transLetters2Lower, transLetters2Roman, transLetters2Upper } from '../../../../utils/letters'
 
 type Props = {
   children?: ReactNode
@@ -13,7 +13,7 @@ export const CreateChord = ({ children, ...props }: Props) => {
       <Stack spacing={2}>
         <Box>
           <Typography>base</Typography>
-          <TextField onChange={(event) => setLetters({ ...letters, base: event.target.value })} />
+          <TextField onChange={(event) => setLetters({ ...letters, base: transLetters2Roman(event.target.value) })} />
         </Box>
         <Box>
           <Typography>lower</Typography>

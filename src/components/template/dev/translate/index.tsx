@@ -4,14 +4,14 @@ import { ReactNode, useState } from 'react'
 import CharCode from './char-code'
 import ChordView from './chord'
 import CreateChord from './create-chord'
-import UpperAndLower from './upper-and-lower'
+import Translator from './translator'
 
 export const TranslatePage = ({ ...props }) => {
   const [index, setIndex] = useState(0)
 
   const pages: { label: string; content: ReactNode }[] = [
     { label: 'char code', content: <CharCode /> },
-    { label: 'translate', content: <UpperAndLower /> },
+    { label: 'translate', content: <Translator /> },
     { label: 'combine', content: <CreateChord /> },
     { label: 'chord', content: <ChordView /> },
   ]
