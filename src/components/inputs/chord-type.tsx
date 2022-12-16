@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogProps, Grid, Typography } from '@mui/material'
+import { Box, Button, Dialog, DialogProps, Divider, Grid, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import filterChordType from '../../utils/chord-type'
 import ChordTypeChip from '../view/chord-type-chip'
@@ -8,29 +8,40 @@ interface Props extends Omit<DialogProps, OverWrap> {
   onSubmit?: (value: string) => void
 }
 
-const ChordTypeSelector = ({ onSubmit, ...props }: Props) => {
+const ChordTypeSelector = ({ onSubmit, onClose, ...props }: Props) => {
   const [filter, setFilter] = useState<string[]>([])
   const chordTypes = filterChordType(filter)
 
   return (
-    <Dialog fullWidth transitionDuration={{ appear: 200, enter: 200, exit: 0 }} {...props}>
-      <ChordTypeFilter onChange={(values) => setFilter(values)} />
-      <Grid container>
-        {chordTypes.map((item) => (
-          <Grid item xs={4} sm={2} md={2} key={item.chroma}>
-            <Button
-              onClick={() => {
-                onSubmit && onSubmit(item.aliases[0])
-                setFilter([])
-              }}
-              fullWidth
-              sx={{ textAlign: 'center', textTransform: 'none' }}
-            >
-              <Typography>{item.aliases[0]}</Typography>
-            </Button>
-          </Grid>
-        ))}
-      </Grid>
+    <Dialog
+      fullWidth
+      transitionDuration={{ appear: 200, enter: 200, exit: 0 }}
+      onClose={(e, r) => {
+        onClose && onClose(e, r)
+        setFilter([])
+      }}
+      {...props}
+    >
+      <Box p={2} height={'50vh'}>
+        <ChordTypeFilter onChange={(values) => setFilter(values)} />
+        <Divider sx={{ m: 2 }} />
+        <Grid container>
+          {chordTypes.map((item) => (
+            <Grid item xs={4} sm={2} md={2} key={item.chroma}>
+              <Button
+                onClick={() => {
+                  onSubmit && onSubmit(item.aliases[0])
+                  setFilter([])
+                }}
+                fullWidth
+                sx={{ textAlign: 'center', textTransform: 'none' }}
+              >
+                <Typography>{item.aliases[0]}</Typography>
+              </Button>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Dialog>
   )
 }
@@ -49,7 +60,7 @@ const ChordTypeFilter = ({ ...props }: { onChange: (values: string[]) => void })
     props.onChange(values)
   }
   return (
-    <Box>
+    <Stack direction={'row'} spacing={2}>
       {Object.keys(types).map((item) => (
         <ChordTypeChip
           key={item}
@@ -59,7 +70,7 @@ const ChordTypeFilter = ({ ...props }: { onChange: (values: string[]) => void })
           onClick={() => handleClick(item as filterType)}
         />
       ))}
-    </Box>
+    </Stack>
   )
 }
 
