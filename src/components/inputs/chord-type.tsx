@@ -1,40 +1,43 @@
-import { Button, Dialog, DialogProps } from '@mui/material'
-import { ChordType as ChordTypeType } from '@tonaljs/chord-type'
-import { ChordType } from '@tonaljs/tonal'
+import { Box, Button, Dialog, DialogProps, Grid, Typography } from '@mui/material'
 import { useState } from 'react'
+import filterChordType from '../../utils/chord-type'
+import ChordTypeChip from '../view/chord-type-chip'
 
-interface Props extends DialogProps {}
+type OverWrap = 'onSubmit'
+interface Props extends Omit<DialogProps, OverWrap> {
+  onSubmit?: (value: string) => void
+}
 
-const ChordTypeSelector = ({ ...props }: Props) => {
+const ChordTypeSelector = ({ onSubmit, ...props }: Props) => {
   const [state, setState] = useState('')
+  const [filter, setFilter] = useState<string[]>(['7', '6'])
   const [open, setOpen] = useState(false)
-  // TODO どこかでconstとしてexport
-  const maj: ChordTypeType[] = []
-  const min: ChordTypeType[] = []
-  const dim: ChordTypeType[] = []
-  const aug: ChordTypeType[] = []
-  const unk: ChordTypeType[] = []
-  ChordType.all().forEach((item) => {
-    switch (item.quality) {
-      case 'Major':
-        maj.push(item)
-      case 'Minor':
-        min.push(item)
-      case 'Diminished':
-        dim.push(item)
-      case 'Augmented':
-        aug.push(item)
-      case 'Unknown':
-        unk.push(item)
-    }
-  })
+  const chordTypes = filterChordType(filter)
 
   return (
-    <Dialog onClose={() => setOpen(false)} {...props}>
-      {maj.map((item) => (
-        <Button key={item.normalized}>{item.aliases[0]}</Button>
-      ))}
+    <Dialog onClose={() => setOpen(false)} fullWidth {...props}>
+      <ChordTypeFilter />
+      <Grid container>
+        {chordTypes.map((item) => (
+          <Grid item xs={4} sm={2} md={2} key={item.chroma}>
+            <Button fullWidth sx={{ textAlign: 'center', textTransform: 'none' }}>
+              <Typography>{item.aliases[0]}</Typography>
+            </Button>
+          </Grid>
+        ))}
+      </Grid>
     </Dialog>
+  )
+}
+
+const ChordTypeFilter = () => {
+  const types = ['Maj', 'min', '7', 'M7']
+  return (
+    <Box>
+      {types.map((item) => (
+        <ChordTypeChip key={item} label={item} />
+      ))}
+    </Box>
   )
 }
 
