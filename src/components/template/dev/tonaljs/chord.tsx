@@ -1,4 +1,4 @@
-import { Box, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField } from '@mui/material'
+import { Box, Grid, Tab, Table, TableBody, TableCell, TableRow, Tabs, TextField, Typography } from '@mui/material'
 import { Chord } from '@tonaljs/tonal'
 import { Chord as ChordType } from '@tonaljs/chord'
 import { useState } from 'react'
@@ -6,7 +6,7 @@ import { useState } from 'react'
 type Props = {}
 
 const TonaljsChord = ({ ...props }: Props) => {
-  const [state, setState] = useState({ get: '', getChord: { tn: '', ot: '', or: '' } })
+  const [state, setState] = useState({ get: '', getChord: { tn: '', ot: '', or: '' }, extended: '' })
   const [chord, setChord] = useState(Chord.get(''))
   const [index, setIndex] = useState(0)
   return (
@@ -20,6 +20,7 @@ const TonaljsChord = ({ ...props }: Props) => {
       >
         <Tab label="get" />
         <Tab label="getChord" />
+        <Tab label="extended" />
       </Tabs>
       <Grid container spacing={4}>
         {index == 0 && (
@@ -43,6 +44,12 @@ const TonaljsChord = ({ ...props }: Props) => {
               onChange={(event) => setState({ ...state, getChord: { ...state.getChord, or: event.target.value } })}
             />
             <ShowChord chord={Chord.getChord(state.getChord.tn, state.getChord.ot, state.getChord.or)} />
+          </Grid>
+        )}
+        {index == 2 && (
+          <Grid item>
+            <TextField label={'Chord.extended(*)'} onChange={(event) => setState({ ...state, extended: event.target.value })} />
+            <Typography>{Chord.extended(state.extended).join(' | ')}</Typography>
           </Grid>
         )}
       </Grid>
