@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge } from 'reactflow'
+import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls } from 'reactflow'
 
 const initialNodes = [
   { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
@@ -16,7 +16,10 @@ const MainFlow = ({ ...props }: Props) => {
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges])
 
   return (
-    <ReactFlow nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} onConnect={onConnect} />
+    <ReactFlow nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} onConnect={onConnect}>
+      <Background />
+      <Controls />
+    </ReactFlow>
   )
 }
 
