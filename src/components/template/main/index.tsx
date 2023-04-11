@@ -1,38 +1,21 @@
-import React, { useCallback } from 'react'
-import ReactFlow, { useNodesState, useEdgesState, addEdge, Connection } from 'reactflow'
+import React from 'react'
 
 import 'reactflow/dist/style.css'
 import Header from '../../commons/Header'
 import { Box, Stack } from '@mui/material'
-
-const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-]
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }]
+import MainFlow from '../../commons/MainFlow'
 
 type Props = {}
 
 const ChordFlow = ({ ...props }: Props) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
-
-  const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges])
-
   return (
     <Stack height={'100%'}>
       <Box>
         <Header />
       </Box>
-      <div style={{ flex: 1 }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-        />
-      </div>
+      <Box flex={1}>
+        <MainFlow />
+      </Box>
     </Stack>
   )
 }
