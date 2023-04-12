@@ -1,8 +1,14 @@
 import { Box, IconButton, Paper, PaperProps, Stack } from '@mui/material'
+import { NodeTypes } from 'reactflow'
 
 interface Props extends PaperProps {}
 
 const ToolBar = ({ ...props }: Props) => {
+  const onDragStart = (event: React.DragEvent, nodeType: keyof NodeTypes) => {
+    event.dataTransfer.setData('application/reactflow', String(nodeType))
+    event.dataTransfer.effectAllowed = 'move'
+  }
+
   return (
     <Paper component={'aside'} {...props}>
       <Stack direction={'row'}>
@@ -11,7 +17,11 @@ const ToolBar = ({ ...props }: Props) => {
           <IconButton>b</IconButton>
           <IconButton>c</IconButton>
         </Stack>
-        <Box>toolが入る予定</Box>
+        <Box>
+          <div onDragStart={(e) => onDragStart(e, 'default')} draggable style={{ padding: 40 }}>
+            C
+          </div>
+        </Box>
       </Stack>
     </Paper>
   )

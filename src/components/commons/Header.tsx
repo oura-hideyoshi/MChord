@@ -7,7 +7,9 @@ const Header = ({ ...props }: Props) => {
     <AppBar position="sticky">
       <Grid container>
         <Grid item sm={6}>
-          <Typography variant="h1">MChord</Typography>
+          <Typography variant="h1" py={1}>
+            MChord
+          </Typography>
         </Grid>
         <Grid item sm={6}>
           <nav>
