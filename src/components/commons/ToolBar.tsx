@@ -1,13 +1,10 @@
 import { Box, IconButton, Paper, PaperProps, Stack } from '@mui/material'
-import { NodeTypes } from 'reactflow'
+import useDrag from '../../hooks/useDrag'
 
 interface Props extends PaperProps {}
 
 const ToolBar = ({ ...props }: Props) => {
-  const onDragStart = (event: React.DragEvent, nodeType: keyof NodeTypes) => {
-    event.dataTransfer.setData('application/reactflow', String(nodeType))
-    event.dataTransfer.effectAllowed = 'move'
-  }
+  const { onDragStart } = useDrag()
 
   return (
     <Paper component={'aside'} {...props}>

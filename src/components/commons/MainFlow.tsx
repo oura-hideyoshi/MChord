@@ -9,6 +9,7 @@ import ReactFlow, {
   ReactFlowInstance,
   Node,
 } from 'reactflow'
+import useDrag from '../../hooks/useDrag'
 
 const initialNodes: Node[] = [
   { id: '1', type: 'input', position: { x: 0, y: 0 }, data: { label: '1' } },
@@ -27,13 +28,11 @@ const MainFlow = ({ ...props }: Props) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
 
+  const { onDragOver } = useDrag()
+
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges])
 
-  const onDragOver = useCallback((event: React.DragEvent) => {
-    event.preventDefault()
-    event.dataTransfer.dropEffect = 'move'
-  }, [])
-
+  // TODO useHooks化
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       event.preventDefault()
