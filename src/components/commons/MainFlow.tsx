@@ -10,12 +10,7 @@ import ReactFlow, {
   Node,
 } from 'reactflow'
 import useDrag from '../../hooks/useDrag'
-
-const initialNodes: Node[] = [
-  { id: '1', type: 'input', position: { x: 0, y: 0 }, data: { label: '1' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-]
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }]
+import getInitState from '../../function/getInitState'
 
 type Props = {}
 
@@ -23,6 +18,8 @@ let id = 0
 const getId = () => `dndnode_${id++}`
 
 const MainFlow = ({ ...props }: Props) => {
+  const { initialNodes, initialEdges, nodeTypes } = getInitState()
+
   const reactFlowWrapper = useRef(null) as any // FIXME
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
@@ -49,7 +46,7 @@ const MainFlow = ({ ...props }: Props) => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       })
-      const newNode = {
+      const newNode: Node = {
         id: getId(),
         type,
         position,
@@ -72,6 +69,7 @@ const MainFlow = ({ ...props }: Props) => {
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        nodeTypes={nodeTypes}
         fitView
       >
         <Background />
