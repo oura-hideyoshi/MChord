@@ -10,7 +10,7 @@ import ReactFlow, {
   Node,
 } from 'reactflow'
 import useDrag from '../../hooks/useDrag'
-import getInitState from '../../function/getInitState'
+import useInitState from '../../function/getInitState'
 
 type Props = {}
 
@@ -18,7 +18,7 @@ let id = 0
 const getId = () => `dndnode_${id++}`
 
 const MainFlow = ({ ...props }: Props) => {
-  const { initialNodes, initialEdges, nodeTypes } = getInitState()
+  const { initialNodes, initialEdges, nodeTypes } = useInitState()
 
   const reactFlowWrapper = useRef(null) as any // FIXME
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
