@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useState } from 'react'
-import { DegreeSelector, NoteSelector } from '../../../inputs'
+import { DegreeSelector, NoteSelector } from '../../../_inputs'
 
 type Props = {}
 

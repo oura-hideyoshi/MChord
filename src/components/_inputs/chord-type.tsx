@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogProps, Divider, Grid, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import filterChordType from '../../utils/chord-type'
-import ChordTypeChip from '../view/chord-type-chip'
+import ChordTypeChip from '../_view/chord-type-chip'
 
 type OverWrap = 'onSubmit'
 interface Props extends Omit<DialogProps, OverWrap> {

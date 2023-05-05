@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useState } from 'react'
-import { ChordTypeSelector } from '../../../inputs'
+import { ChordTypeSelector } from '../../../_inputs'
 
 type Props = {}
 
