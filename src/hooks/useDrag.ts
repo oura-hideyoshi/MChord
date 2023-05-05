@@ -1,9 +1,12 @@
-import { useCallback } from 'react'
-import { NodeTypes } from 'reactflow'
+import { DragEventHandler, useCallback } from 'react'
+import { Chord } from '@tonaljs/chord'
 
 function useDrag() {
-  const onDragChordNodeStart = (event: React.DragEvent, nodeType: keyof NodeTypes) => {
-    event.dataTransfer.setData('application/reactflow', String(nodeType))
+  const createDragChordNodeStartFnc = (chordName: Chord['symbol']): DragEventHandler<HTMLDivElement> => {
+    return (e) => onDragChordNodeStart(e, chordName)
+  }
+  const onDragChordNodeStart = (event: React.DragEvent, chordName: Chord['symbol']) => {
+    event.dataTransfer.setData('application/reactflow', String(chordName))
     event.dataTransfer.effectAllowed = 'move'
   }
 
@@ -12,7 +15,7 @@ function useDrag() {
     event.dataTransfer.dropEffect = 'move'
   }, [])
 
-  return { onDragStart: onDragChordNodeStart, onDragOver }
+  return { createDragChordNodeStartFnc, onDragChordNodeStart, onDragOver }
 }
 
 export default useDrag
