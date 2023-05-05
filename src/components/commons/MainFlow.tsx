@@ -46,6 +46,7 @@ const MainFlow = ({ ...props }: Props) => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       })
+
       const newNode: Node = {
         id: getId(),
         type: 'ChordNode',

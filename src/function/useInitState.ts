@@ -10,6 +10,7 @@ function useInitState() {
   ]
   const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }]
 
+  // react-flowの都合上、memo化しておかないとレンダリングのループに陥る
   const nodeTypes = useMemo(() => {
     return {
       ChordNode: ChordNode,
