@@ -12,7 +12,7 @@ function useDrag() {
     return (e) => onDragChordNodeStart(e, chordName)
   }
   const onDragChordNodeStart = (event: React.DragEvent, chordName: Chord['symbol']) => {
-    const chordNodeData: ChordNodeData = { chordName: chordName, key: undefined }
+    const chordNodeData: ChordNodeData = { chordName: chordName, key: 'C' }
     event.dataTransfer.setData(format.chordData, JSON.stringify(chordNodeData))
     event.dataTransfer.setData(format.nodeType, nodeTypeNames.ChordNode)
     event.dataTransfer.effectAllowed = 'move'

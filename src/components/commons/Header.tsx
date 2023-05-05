@@ -1,8 +1,11 @@
-import { AppBar, Grid, Typography } from '@mui/material'
+import { AppBar, Grid, Switch, Typography } from '@mui/material'
+import { useDisplayController } from '../../store'
 
 type Props = {}
 
 const Header = ({ ...props }: Props) => {
+  const { isRoman, toggleIsRoman } = useDisplayController()
+
   return (
     <AppBar position="sticky">
       <Grid container>
@@ -15,6 +18,7 @@ const Header = ({ ...props }: Props) => {
           <nav>
             <a href={'/dev'}>dev</a>
           </nav>
+          <Switch checked={isRoman} onChange={toggleIsRoman} color="secondary" />
         </Grid>
       </Grid>
     </AppBar>

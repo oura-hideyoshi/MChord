@@ -1,11 +1,22 @@
-import { Chord } from '@tonaljs/tonal'
+import { Chord, Progression } from '@tonaljs/tonal'
 import { memo } from 'react'
 import { Handle, NodeProps, Position } from 'reactflow'
 import { ChordNodeData } from '../../type/NodeData'
+import { useDisplayController } from '../../store'
 
 const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
-  const chord = Chord.get(props.data.chordName)
-  const symbol = chord.empty ? '?' : chord.symbol
+  const { isRoman } = useDisplayController()
+
+  const { chordName, key } = props.data
+  const chord = Chord.get(chordName)
+
+  // calc display symbol
+  let symbol = ''
+  if (isRoman) {
+    symbol = Progression.toRomanNumerals(key || '', [chord.symbol])[0]
+  } else {
+    symbol = chord.empty ? '?' : chord.symbol
+  }
 
   return (
     <>
