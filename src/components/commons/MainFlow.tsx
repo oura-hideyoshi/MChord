@@ -35,10 +35,10 @@ const MainFlow = ({ ...props }: Props) => {
       event.preventDefault()
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-      const type = event.dataTransfer.getData('application/reactflow')
+      const data = event.dataTransfer.getData('application/reactflow')
 
       // check if the dropped element is valid
-      if (typeof type === 'undefined' || !type) {
+      if (typeof data === 'undefined' || !data) {
         return
       }
 
@@ -48,9 +48,9 @@ const MainFlow = ({ ...props }: Props) => {
       })
       const newNode: Node = {
         id: getId(),
-        type,
+        type: 'ChordNode',
         position,
-        data: { label: `${type} node` },
+        data,
       }
 
       setNodes((nds) => nds.concat(newNode))

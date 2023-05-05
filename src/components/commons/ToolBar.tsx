@@ -15,7 +15,7 @@ const ToolBar = ({ ...props }: Props) => {
           <IconButton>c</IconButton>
         </Stack>
         <Box>
-          <div onDragStart={(e) => onDragStart(e, 'default')} draggable style={{ padding: 40 }}>
+          <div onDragStart={(e) => onDragStart(e, 'C')} draggable style={{ padding: 40 }}>
             C
           </div>
         </Box>
