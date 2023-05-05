@@ -15,7 +15,13 @@ const MainFlow = ({ ...props }: Props) => {
 
   const { onDragOver, createDropFnc } = useDrag()
 
-  const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges])
+  const onConnect = useCallback(
+    (params: Connection) => {
+      setEdges((eds) => addEdge(params, eds))
+      console.log('params', params)
+    },
+    [setEdges]
+  )
 
   const onDrop = createDropFnc(reactFlowInstance, (newNode) => setNodes((nds) => nds.concat(newNode)))
 

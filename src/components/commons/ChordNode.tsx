@@ -1,9 +1,10 @@
 import { Chord } from '@tonaljs/tonal'
 import { memo } from 'react'
 import { Handle, NodeProps, Position } from 'reactflow'
+import { ChordNodeData } from '../../type/NodeData'
 
-const ChordNode = memo(({ ...props }: NodeProps<string>) => {
-  const chord = Chord.get(props.data)
+const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
+  const chord = Chord.get(props.data.chordName)
   const symbol = chord.empty ? '?' : chord.symbol
 
   return (

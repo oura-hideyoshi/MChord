@@ -7,7 +7,7 @@ interface Props extends PaperProps {}
 
 const ToolBar = ({ ...props }: Props) => {
   const [chordName, setChordName] = useState('')
-
+  let isValidChordName = !Chord.get(chordName).empty
   const { createDragChordNodeStartFnc } = useDrag()
   const onDragStart = createDragChordNodeStartFnc(chordName)
 
@@ -22,7 +22,7 @@ const ToolBar = ({ ...props }: Props) => {
         <Box>
           {/* FIXME これではdivでもいけてしまう*/}
           <div onDragStart={onDragStart} draggable style={{ padding: 40 }}>
-            {Chord.chord(chordName).empty ? '?' : Chord.chord(chordName).symbol}
+            {isValidChordName ? Chord.get(chordName).symbol : '?'}
           </div>
         </Box>
         <Input value={chordName} onChange={(e) => setChordName(e.target.value)} />

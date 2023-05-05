@@ -5,13 +5,15 @@ import { Node } from 'reactflow'
 import { format } from '../const/dataTransfer'
 import { createChordNode } from '../function/createNode'
 import { nodeTypeNames } from '../const/nodeTypes'
+import { ChordNodeData } from '../type/NodeData'
 
 function useDrag() {
   const createDragChordNodeStartFnc = (chordName: Chord['symbol']): DragEventHandler<HTMLDivElement> => {
     return (e) => onDragChordNodeStart(e, chordName)
   }
   const onDragChordNodeStart = (event: React.DragEvent, chordName: Chord['symbol']) => {
-    event.dataTransfer.setData(format.chordData, String(chordName))
+    const chordNodeData: ChordNodeData = { chordName: chordName, key: undefined }
+    event.dataTransfer.setData(format.chordData, JSON.stringify(chordNodeData))
     event.dataTransfer.setData(format.nodeType, nodeTypeNames.ChordNode)
     event.dataTransfer.effectAllowed = 'move'
   }
@@ -28,11 +30,11 @@ function useDrag() {
 
         // 1. add chord info to new node
         const nodeType = event.dataTransfer.getData(format.nodeType)
-        let newChordNode: Node | null = null
+        let newNode: Node | null = null
         switch (nodeType) {
           case nodeTypeNames.ChordNode:
-            const chordName = event.dataTransfer.getData(format.chordData)
-            newChordNode = createChordNode(chordName)
+            const chordData = JSON.parse(event.dataTransfer.getData(format.chordData)) as ChordNodeData
+            newNode = createChordNode(chordData)
             break
 
           case nodeTypeNames.KeyTransNode:
@@ -49,9 +51,10 @@ function useDrag() {
           x: offsetX,
           y: offsetY,
         })
-        newChordNode!.position = position
+        newNode!.position = position
 
-        callback(newChordNode!)
+        console.log('newNode', newNode)
+        callback(newNode!)
       }
     },
     []
