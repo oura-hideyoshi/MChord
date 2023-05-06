@@ -36,6 +36,8 @@ const MainFlow = ({ ...props }: Props) => {
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        onNodeDoubleClick={(e, n) => console.log('n', n)}
+        onEdgeDoubleClick={(e, edge) => console.log('edge', edge)}
         nodeTypes={nodeTypes}
         fitView
       >
