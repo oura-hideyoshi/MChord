@@ -5,7 +5,7 @@ import Header from '../../commons/Header'
 import { Box } from '@mui/material'
 import MainFlow from '../../commons/MainFlow'
 import ToolBar from '../../commons/ToolBar'
-import { ReactFlowProvider } from 'reactflow'
+import { Panel, ReactFlowProvider } from 'reactflow'
 
 type Props = {}
 
@@ -17,7 +17,9 @@ const ChordFlow = ({ ...props }: Props) => {
       <Box flex={1} position={'relative'}>
         <ReactFlowProvider>
           <MainFlow />
-          <ToolBar sx={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translate(-50%, 0%)' }} />
+          <Panel position="bottom-center">
+            <ToolBar />
+          </Panel>
         </ReactFlowProvider>
       </Box>
     </div>
