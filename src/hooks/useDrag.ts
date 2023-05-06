@@ -1,9 +1,6 @@
 import { DragEventHandler, useCallback } from 'react'
 import { Chord } from '@tonaljs/chord'
-import { ReactFlowInstance } from 'reactflow'
-import { Node } from 'reactflow'
 import { format } from '../const/dataTransfer'
-import { createChordNode } from '../function/createNode'
 import { nodeTypeNames } from '../const/nodeTypes'
 import { ChordNodeData } from '../type/NodeData'
 
@@ -23,44 +20,54 @@ function useDrag() {
     event.dataTransfer.dropEffect = 'move'
   }, [])
 
-  const createDropFnc = useCallback(
-    (reactFlowInstance: ReactFlowInstance | null, callback: (newNode: Node) => void): React.DragEventHandler<HTMLDivElement> => {
-      return (event: React.DragEvent) => {
-        event.preventDefault()
+  const onDragOverChordNode = useCallback((event: React.DragEvent) => {
+    event.preventDefault()
+    const chordData = JSON.parse(event.dataTransfer.getData(format.chordData)) as ChordNodeData
+  }, [])
 
-        // 1. add chord info to new node
-        const nodeType = event.dataTransfer.getData(format.nodeType)
-        let newNode: Node | null = null
-        switch (nodeType) {
-          case nodeTypeNames.ChordNode:
-            const chordData = JSON.parse(event.dataTransfer.getData(format.chordData)) as ChordNodeData
-            newNode = createChordNode(chordData)
-            break
+  // const createDropOnFlowFnc = useCallback(
+  //   (reactFlowInstance: ReactFlowInstance | null, callback: (newNode: Node) => void): React.DragEventHandler<HTMLDivElement> => {
+  //     return (event: React.DragEvent) => {
+  //       event.preventDefault()
 
-          case nodeTypeNames.KeyTransNode:
-            // TODO
-            break
+  //       // 1. add chord info to new node
+  //       const nodeType = event.dataTransfer.getData(format.nodeType)
+  //       let newNode: Node | null = null
+  //       switch (nodeType) {
+  //         case nodeTypeNames.ChordNode:
+  //           const chordData = JSON.parse(event.dataTransfer.getData(format.chordData)) as ChordNodeData
+  //           newNode = createChordNode(chordData)
+  //           break
 
-          default:
-            return
-        }
+  //         case nodeTypeNames.KeyTransNode:
+  //           // TODO
+  //           break
 
-        // 2. add reactflow position info to new node
-        const { offsetX, offsetY } = event.nativeEvent
-        const position = reactFlowInstance!.project({
-          x: offsetX,
-          y: offsetY,
-        })
-        newNode!.position = position
+  //         default:
+  //           return
+  //       }
 
-        console.log('newNode', newNode)
-        callback(newNode!)
-      }
-    },
-    []
-  )
+  //       // 2. add reactflow position info to new node
+  //       const { offsetX, offsetY } = event.nativeEvent
+  //       const position = reactFlowInstance!.project({
+  //         x: offsetX,
+  //         y: offsetY,
+  //       })
+  //       newNode!.position = position
 
-  return { createDragChordNodeStartFnc, onDragChordNodeStart, onDragOver, createDropFnc }
+  //       console.log('newNode', newNode)
+  //       callback(newNode!)
+  //     }
+  //   },
+  //   []
+  // )
+
+  return {
+    createDragChordNodeStartFnc,
+    onDragChordNodeStart,
+    onDragOver,
+    // createDropOnFlowFnc
+  }
 }
 
 export default useDrag

@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react'
-import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls, ReactFlowInstance } from 'reactflow'
+import React, { useCallback, useRef } from 'react'
+import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls } from 'reactflow'
 import useDrag from '../../hooks/useDrag'
 import useInitState from '../../function/useInitState'
 
@@ -11,9 +11,8 @@ const MainFlow = ({ ...props }: Props) => {
   const reactFlowWrapper = useRef(null) as any // FIXME
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
-  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null)
 
-  const { onDragOver, createDropFnc } = useDrag()
+  const { onDragOver } = useDrag()
 
   const onConnect = useCallback(
     (params: Connection) => {
@@ -23,8 +22,6 @@ const MainFlow = ({ ...props }: Props) => {
     [setEdges]
   )
 
-  const onDrop = createDropFnc(reactFlowInstance, (newNode) => setNodes((nds) => nds.concat(newNode)))
-
   return (
     <div ref={reactFlowWrapper} style={{ height: '100%', width: '100%' }}>
       <ReactFlow
@@ -33,8 +30,6 @@ const MainFlow = ({ ...props }: Props) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onInit={setReactFlowInstance}
-        onDrop={onDrop}
         onDragOver={onDragOver}
         onNodeDoubleClick={(e, n) => console.log('n', n)}
         onEdgeDoubleClick={(e, edge) => console.log('edge', edge)}
