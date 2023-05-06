@@ -64,11 +64,12 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   return (
     <>
       <Handle type="target" position={Position.Left} />
+      {/* TODO: nodeをhover時に＋マーク表示 */}
       <div
+        className={`rounded-full p-2 text-white ${isOverlapping ? 'border border-dashed bg-primary-200' : 'bg-primary-500'}`}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDrop={onDropNode}
-        style={{ padding: 20, border: isOverlapping ? 'solid 1px red' : '' }}
       >
         {symbol}
       </div>
