@@ -49,7 +49,7 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
         targetNode.type = nodeTypeNames.ChordNode
         targetNode.data = chordNodeData
         break
-      case nodeTypeNames.KeyTransNode:
+      case nodeTypeNames.TransKeyNode:
         // TODO
         break
     }
