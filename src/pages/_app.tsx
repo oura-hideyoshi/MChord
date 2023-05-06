@@ -1,6 +1,7 @@
 import { Box, ThemeProvider, createTheme } from '@mui/material'
 import type { AppProps } from 'next/app'
 import '../index.css'
+import '../globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   const theme = createTheme({
