@@ -1,8 +1,7 @@
 import { Key, Scale } from '@tonaljs/tonal'
-import { ChangeEventHandler, DragEventHandler, memo, useState } from 'react'
+import { ChangeEventHandler, DragEventHandler, MouseEventHandler, memo, useState } from 'react'
 import { Edge, Handle, NodeProps, Position, ReactFlowInstance, useNodeId, useReactFlow } from 'reactflow'
 import { ChordNodeData, TransKeyNodeData } from '../../type/NodeData'
-import { Box } from '@mui/material'
 import { format } from '../../const/dataTransfer'
 import { nodeTypeNames } from '../../const/nodeTypes'
 import { createDraftNode } from '../../function/createNode'
@@ -21,6 +20,12 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
 
   const key = Key.majorKey(keyTonic)
 
+  const onDragEnter: MouseEventHandler<HTMLDivElement> = (e) => {
+    setIsOverlapping(true)
+  }
+  const onDragLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+    setIsOverlapping(false)
+  }
   const onDropNode: DragEventHandler<HTMLDivElement> = (e) => {
     setIsOverlapping(false)
 
@@ -52,43 +57,17 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
 
   const onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     setKeyTonic(e.target.value)
-    console.log('e.target.value', e.target.value)
     updateNodeFromRoot(reactFlow, nodeId, (node) => (node.data = { ...node.data, key: e.target.value }))
-  }
-
-  const updateNodeFromRoot = (
-    reactflow: ReactFlowInstance,
-    rootNodeId: string,
-    callback: (node: Node) => void,
-    continueFnc?: (node: Node) => boolean
-  ) => {
-    continueFnc ??= () => false // defaultでは、continueの判断をしない
-
-    const nodes = reactFlow.getNodes()
-    const edges = reactFlow.getEdges()
-    const rootNode = nodes.find((node) => (node.id = rootNodeId))
-    if (!rootNode) return
-
-    const nodeQ = [rootNode]
-    while (nodeQ.length != 0) {
-      const currentNode = nodeQ.shift()!
-
-      if (continueFnc(currentNode)) continue
-      callback(currentNode)
-
-      // push nodes connected with currentNode
-      const connectedEdges = edges.filter((e) => e.source == currentNode.id)
-      connectedEdges.forEach((edge) => {
-        const connectedNode = nodes.find((node) => node.id == edge.target)!
-        nodeQ.push(connectedNode)
-      })
-    }
-    reactFlow.setNodes(nodes)
   }
 
   return (
     <>
-      <Box m={2} onDrop={onDropNode}>
+      <div
+        onDragEnter={onDragEnter}
+        onDragLeave={onDragLeave}
+        onDrop={onDropNode}
+        style={{ border: isOverlapping ? 'solid 1px red' : '' }}
+      >
         <Handle type="source" position={Position.Right} />
         <select value={keyTonic} onChange={onChange}>
           {scale.map((item, idx) => (
@@ -98,7 +77,7 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
           ))}
         </select>
         key
-      </Box>
+      </div>
     </>
   )
 })
@@ -110,6 +89,36 @@ const createScale = () => {
     return cChromaticScale[idx] + ' / ' + aChromaticScale[idx] + 'm'
   })
   return [cChromaticScale, scale]
+}
+
+const updateNodeFromRoot = (
+  reactFlow: ReactFlowInstance,
+  rootNodeId: string,
+  callback: (node: Node) => void,
+  continueFnc?: (node: Node) => boolean
+) => {
+  continueFnc ??= () => false // defaultでは、continueの判断をしない
+
+  const nodes = reactFlow.getNodes()
+  const edges = reactFlow.getEdges()
+  const rootNode = nodes.find((node) => node.id == rootNodeId)
+  if (!rootNode) return
+
+  const nodeQ = [rootNode]
+  while (nodeQ.length != 0) {
+    const currentNode = nodeQ.shift()!
+
+    if (continueFnc(currentNode)) continue
+    callback(currentNode)
+
+    // push nodes connected with currentNode
+    const connectedEdges = edges.filter((e) => e.source == currentNode.id)
+    connectedEdges.forEach((edge) => {
+      const connectedNode = nodes.find((node) => node.id == edge.target)!
+      nodeQ.push(connectedNode)
+    })
+  }
+  reactFlow.setNodes(nodes)
 }
 
 TransKeyNode.displayName = 'TransKeyNode'
