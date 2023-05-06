@@ -8,10 +8,10 @@ import { nodeTypeNames } from '../const/nodeTypes'
 import { ChordNodeData } from '../type/NodeData'
 
 function useDrag() {
-  const createDragChordNodeStartFnc = (chordName: Chord['symbol']): DragEventHandler<HTMLDivElement> => {
-    return (e) => onDragChordNodeStart(e, chordName)
+  const createDragChordNodeStartFnc = (chordName: Chord['symbol'], key: string): DragEventHandler<HTMLDivElement> => {
+    return (e) => onDragChordNodeStart(e, chordName, key)
   }
-  const onDragChordNodeStart = (event: React.DragEvent, chordName: Chord['symbol']) => {
+  const onDragChordNodeStart = (event: React.DragEvent, chordName: Chord['symbol'], key: string) => {
     const chordNodeData: ChordNodeData = { chordName: chordName, key: 'C' }
     event.dataTransfer.setData(format.chordData, JSON.stringify(chordNodeData))
     event.dataTransfer.setData(format.nodeType, nodeTypeNames.ChordNode)
