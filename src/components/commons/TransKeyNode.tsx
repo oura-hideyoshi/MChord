@@ -1,6 +1,6 @@
 import { Key, Scale } from '@tonaljs/tonal'
 import { ChangeEventHandler, DragEventHandler, memo, useState } from 'react'
-import { Edge, Handle, NodeProps, Position, useNodeId, useReactFlow } from 'reactflow'
+import { Edge, Handle, NodeProps, Position, ReactFlowInstance, useNodeId, useReactFlow } from 'reactflow'
 import { ChordNodeData, TransKeyNodeData } from '../../type/NodeData'
 import { Box } from '@mui/material'
 import { format } from '../../const/dataTransfer'
@@ -15,7 +15,7 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
   const [keyTonic, setKeyTonic] = useState('C')
   const reactFlow = useReactFlow()
   const [isOverlapping, setIsOverlapping] = useState(false)
-  const nodeId = useNodeId()
+  const nodeId = useNodeId()!
 
   const [cScale, scale] = createScale()
 
@@ -25,7 +25,7 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
     setIsOverlapping(false)
 
     // prepare two nodes and an edge as connector
-    const sourceNode = reactFlow.getNode(nodeId!) as Node<TransKeyNodeData>
+    const sourceNode = reactFlow.getNode(nodeId) as Node<TransKeyNodeData>
     let targetNode = createDraftNode()
     const newEdge: Edge = { id: generateUUID(), source: sourceNode.id, target: targetNode.id }
 
@@ -39,7 +39,7 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
         targetNode.data = chordNodeData
         break
       case nodeTypeNames.TransKeyNode:
-        // TODO
+        // do nothing
         break
     }
     targetNode.position.x = sourceNode.position.x + 100
@@ -52,7 +52,38 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
 
   const onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     setKeyTonic(e.target.value)
-    // TODO このノードにつながっている全てのnodeのdata.keyを変更
+    console.log('e.target.value', e.target.value)
+    updateNodeFromRoot(reactFlow, nodeId, (node) => (node.data = { ...node.data, key: e.target.value }))
+  }
+
+  const updateNodeFromRoot = (
+    reactflow: ReactFlowInstance,
+    rootNodeId: string,
+    callback: (node: Node) => void,
+    continueFnc?: (node: Node) => boolean
+  ) => {
+    continueFnc ??= () => false // defaultでは、continueの判断をしない
+
+    const nodes = reactFlow.getNodes()
+    const edges = reactFlow.getEdges()
+    const rootNode = nodes.find((node) => (node.id = rootNodeId))
+    if (!rootNode) return
+
+    const nodeQ = [rootNode]
+    while (nodeQ.length != 0) {
+      const currentNode = nodeQ.shift()!
+
+      if (continueFnc(currentNode)) continue
+      callback(currentNode)
+
+      // push nodes connected with currentNode
+      const connectedEdges = edges.filter((e) => e.source == currentNode.id)
+      connectedEdges.forEach((edge) => {
+        const connectedNode = nodes.find((node) => node.id == edge.target)!
+        nodeQ.push(connectedNode)
+      })
+    }
+    reactFlow.setNodes(nodes)
   }
 
   return (

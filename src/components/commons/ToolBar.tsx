@@ -23,7 +23,7 @@ const ToolBar = ({ ...props }: Props) => {
         </Stack>
         <Box>
           {/* FIXME これではdimでもいけてしまう*/}
-          <div onDragStart={onDragStart} draggable style={{ padding: 40 }}>
+          <div onDragStart={onDragStart} draggable={isValidChordName} style={{ padding: 40 }}>
             {isValidChordName ? Chord.get(chordName).symbol : '?'}
           </div>
         </Box>
