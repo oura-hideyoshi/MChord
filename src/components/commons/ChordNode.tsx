@@ -62,7 +62,7 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   }
 
   return (
-    <>
+    <div>
       <Handle type="target" position={Position.Left} />
       {/* TODO: nodeをhover時に＋マーク表示 */}
       <div
@@ -74,7 +74,7 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
         {symbol}
       </div>
       <Handle type="source" position={Position.Right} />
-    </>
+    </div>
   )
 })
 

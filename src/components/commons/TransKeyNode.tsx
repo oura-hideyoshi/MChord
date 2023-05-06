@@ -61,24 +61,23 @@ const TransKeyNode = memo(({ ...props }: NodeProps<TransKeyNodeData>) => {
   }
 
   return (
-    <>
-      <div
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragLeave}
-        onDrop={onDropNode}
-        style={{ border: isOverlapping ? 'solid 1px red' : '' }}
-      >
-        <Handle type="source" position={Position.Right} />
-        <select value={keyTonic} onChange={onChange}>
-          {scale.map((item, idx) => (
-            <option key={item} value={cScale[idx]}>
-              {item}
-            </option>
-          ))}
-        </select>
-        key
-      </div>
-    </>
+    <div
+      className="rounded bg-primary-500 p-2"
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
+      onDrop={onDropNode}
+      style={{ border: isOverlapping ? 'solid 1px red' : '' }}
+    >
+      <Handle type="source" position={Position.Right} />
+      <select className="" value={keyTonic} onChange={onChange}>
+        {scale.map((item, idx) => (
+          <option key={item} value={cScale[idx]}>
+            {item}
+          </option>
+        ))}
+      </select>
+      key
+    </div>
   )
 })
 

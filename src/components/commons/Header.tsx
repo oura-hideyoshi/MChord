@@ -15,9 +15,9 @@ const Header = ({ ...props }: Props) => {
         </Link>
       </h1>
       <span className="m-1 flex items-center rounded-md bg-white p-1 font-extrabold">
-        <Chip variant="filled" label="C#" className={`${!isRoman ? 'bg-primary-500 text-white' : 'bg-primary-200'}`} />
+        <Chip variant="filled" label="C#" className={`${!isRoman ? 'bg-primary-700 text-white' : 'bg-primary-200'}`} />
         <Switch checked={isRoman} onChange={toggleIsRoman} />
-        <Chip variant="filled" label="I#" className={`${isRoman ? 'bg-primary-500 text-white' : 'bg-primary-200'}`} />
+        <Chip variant="filled" label="I#" className={`${isRoman ? 'bg-primary-700 text-white' : 'bg-primary-200'}`} />
       </span>
     </div>
   )
