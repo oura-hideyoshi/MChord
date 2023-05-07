@@ -6,7 +6,6 @@ import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material'
 import MainFlow from '../../commons/MainFlow'
 import ToolBar from '../../commons/ToolBar'
 import { Panel, ReactFlowProvider } from 'reactflow'
-import Link from 'next/link'
 
 type Props = {}
 
@@ -22,20 +21,12 @@ const ChordFlow = ({ ...props }: Props) => {
             <ToolBar />
           </Panel>
           <Panel position="bottom-right">
-            <SpeedDial ariaLabel={'speed dial'} icon={<SpeedDialIcon />}>
-              <SpeedDialAction
-                tooltipTitle={'機能要望フォーム(外部リンク)'}
-                icon={
-                  <Link
-                    target="_blank"
-                    href={
-                      'https://docs.google.com/forms/d/e/1FAIpQLSeVCxpy8Qf7fWcsJGzYwn7CUfe-j-YopakNRQKG6AAwVwcnEw/viewform?usp=sf_link'
-                    }
-                  >
-                    ?
-                  </Link>
-                }
-              />
+            <SpeedDial
+              onClick={() => window.open('https://docs.google.com/forms/d/1ZpW7FyyuEaaBYgFh206N-dUXkNw8QnpO7mxkhM6q5Zs/edit')}
+              ariaLabel={'speed dial'}
+              icon={<SpeedDialIcon />}
+            >
+              <SpeedDialAction className="hover:text-black" tooltipTitle={'機能要望フォーム(外部リンク)'} icon={'?'} />
             </SpeedDial>
           </Panel>
         </ReactFlowProvider>
