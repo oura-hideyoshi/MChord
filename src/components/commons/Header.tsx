@@ -14,6 +14,12 @@ const Header = ({ ...props }: Props) => {
           MChord
         </Link>
       </h1>
+      <Link
+        target="_blank"
+        href={'https://docs.google.com/forms/d/e/1FAIpQLSeVCxpy8Qf7fWcsJGzYwn7CUfe-j-YopakNRQKG6AAwVwcnEw/viewform?usp=sf_link'}
+      >
+        form
+      </Link>
       <span className="m-1 flex items-center rounded-md bg-white p-1 font-extrabold">
         <Chip variant="filled" label="C#" className={`${!isRoman ? 'bg-primary-700 text-white' : 'bg-primary-200'}`} />
         <Switch checked={isRoman} onChange={toggleIsRoman} />
