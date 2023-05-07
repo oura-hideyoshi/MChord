@@ -25,11 +25,14 @@ const ToolBar = () => {
           </ToggleButton>
         </ToggleButtonGroup>
         {/* FIXME これではdimでもいけてしまう*/}
-        <div className="grid w-32">
+        <div className="grid w-24 transition hover:-translate-y-4 hover:cursor-grab">
           <div
-            className={`grid h-12 scale-100 place-self-center rounded-full  ${
-              isValidChordName ? 'bg-primary-500 text-white shadow-md shadow-gray-500' : 'border border-dashed border-primary-500'
-            }`}
+            className={`grid h-12 scale-100 place-self-center rounded-full
+             ${
+               isValidChordName
+                 ? 'bg-primary-500 text-white shadow-md shadow-gray-500'
+                 : 'border border-dashed border-primary-500'
+             }`}
             onDragStart={onDragStart}
             draggable={isValidChordName}
           >
