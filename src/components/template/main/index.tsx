@@ -6,6 +6,7 @@ import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material'
 import MainFlow from '../../commons/MainFlow'
 import ToolBar from '../../commons/ToolBar'
 import { Panel, ReactFlowProvider } from 'reactflow'
+import { Icon } from '@iconify/react'
 
 type Props = {}
 
@@ -26,7 +27,11 @@ const ChordFlow = ({ ...props }: Props) => {
               ariaLabel={'speed dial'}
               icon={<SpeedDialIcon />}
             >
-              <SpeedDialAction className="hover:text-black" tooltipTitle={'機能要望フォーム(外部リンク)'} icon={'?'} />
+              <SpeedDialAction
+                className="hover:text-black"
+                tooltipTitle={'機能要望フォーム(外部リンク)'}
+                icon={<Icon icon="icons8:idea" />}
+              />
             </SpeedDial>
           </Panel>
         </ReactFlowProvider>
