@@ -23,7 +23,11 @@ const ChordFlow = ({ ...props }: Props) => {
           </Panel>
           <Panel position="bottom-right">
             <SpeedDial
-              onClick={() => window.open('https://docs.google.com/forms/d/1ZpW7FyyuEaaBYgFh206N-dUXkNw8QnpO7mxkhM6q5Zs/edit')}
+              onClick={() =>
+                window.open(
+                  'https://docs.google.com/forms/d/e/1FAIpQLSeVCxpy8Qf7fWcsJGzYwn7CUfe-j-YopakNRQKG6AAwVwcnEw/viewform?usp=sf_link'
+                )
+              }
               ariaLabel={'speed dial'}
               icon={<SpeedDialIcon />}
             >
