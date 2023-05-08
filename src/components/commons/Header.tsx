@@ -1,6 +1,7 @@
 import { Chip, Switch, Tooltip } from '@mui/material'
 import { useDisplayController } from '../../store'
 import Link from 'next/link'
+import URL from '../../const/URL'
 
 type Props = {}
 
@@ -11,11 +12,7 @@ const Header = ({ ...props }: Props) => {
     <div className="sticky flex items-center justify-between bg-primary-950 text-white shadow-md shadow-black">
       <h1 className="m-2 rounded bg-white text-primary-950">
         <Tooltip title={'HPを開きます'}>
-          <Link
-            className="p-4 text-2xl font-extrabold"
-            target="_blank"
-            href={'https://wandering-whimsey-6e0.notion.site/MChord-a257b5ac07fd43e9afc17cc5b1088531'}
-          >
+          <Link className="p-4 text-2xl font-extrabold" target="_blank" href={URL.homepage}>
             MChord
           </Link>
         </Tooltip>
