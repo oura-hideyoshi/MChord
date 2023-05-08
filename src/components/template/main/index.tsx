@@ -6,6 +6,7 @@ import { Box } from '@mui/material'
 import MainFlow from '../../commons/MainFlow'
 import ToolBar from '../../commons/ToolBar'
 import { Panel, ReactFlowProvider } from 'reactflow'
+import SpeedDial from '../../commons/SpeedDial'
 
 type Props = {}
 
@@ -19,6 +20,9 @@ const ChordFlow = ({ ...props }: Props) => {
           <MainFlow />
           <Panel position="bottom-center">
             <ToolBar />
+          </Panel>
+          <Panel position="bottom-right">
+            <SpeedDial />
           </Panel>
         </ReactFlowProvider>
       </Box>
