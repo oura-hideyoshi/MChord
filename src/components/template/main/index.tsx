@@ -22,19 +22,22 @@ const ChordFlow = ({ ...props }: Props) => {
             <ToolBar />
           </Panel>
           <Panel position="bottom-right">
-            <SpeedDial
-              onClick={() =>
-                window.open(
-                  'https://docs.google.com/forms/d/e/1FAIpQLSeVCxpy8Qf7fWcsJGzYwn7CUfe-j-YopakNRQKG6AAwVwcnEw/viewform?usp=sf_link'
-                )
-              }
-              ariaLabel={'speed dial'}
-              icon={<SpeedDialIcon />}
-            >
+            <SpeedDial ariaLabel={'speed dial'} icon={<SpeedDialIcon />}>
               <SpeedDialAction
                 className="hover:text-black"
                 tooltipTitle={'機能要望フォーム(外部リンク)'}
                 icon={<Icon icon="icons8:idea" />}
+                onClick={() =>
+                  window.open(
+                    'https://docs.google.com/forms/d/e/1FAIpQLSeVCxpy8Qf7fWcsJGzYwn7CUfe-j-YopakNRQKG6AAwVwcnEw/viewform?usp=sf_link'
+                  )
+                }
+              />
+              <SpeedDialAction
+                className="hover:text-black"
+                tooltipTitle={'バグ報告フォーム(外部リンク)'}
+                icon={<Icon icon="material-symbols:bug-report-outline" />}
+                onClick={() => window.open('https://forms.gle/Ra7nnpZFpj9VH2cYA')}
               />
             </SpeedDial>
           </Panel>
