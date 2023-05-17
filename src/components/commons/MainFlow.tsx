@@ -1,7 +1,8 @@
 import React, { useCallback, useRef } from 'react'
-import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls } from 'reactflow'
+import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls, OnNodesChange } from 'reactflow'
 import useDrag from '../../hooks/useDrag'
 import useInitState from '../../function/useInitState'
+import onNodeUpdate from '../../function/onNodeMove'
 
 type Props = {}
 
@@ -22,12 +23,19 @@ const MainFlow = ({ ...props }: Props) => {
     [setEdges]
   )
 
+  const handleNodesChange: OnNodesChange = (chg) => {
+    onNodeUpdate(chg, () => {
+      console.log(chg)
+    })
+    onNodesChange(chg)
+  }
+
   return (
     <div ref={reactFlowWrapper} style={{ height: '100%', width: '100%' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
+        onNodesChange={handleNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDragOver={onDragOver}
