@@ -39,7 +39,7 @@ export const useReactflowLayout = (direction = 'LR') => {
     setNodes(nodes)
     setEdges(edges)
     setTimeout(() => {
-      fitView()
+      fitView({ duration: 1000 })
     }, 1)
   }
 
