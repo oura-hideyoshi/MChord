@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react'
 import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls } from 'reactflow'
-import useDrag from '../../hooks/useDrag'
-import useInitState from '../../function/useInitState'
+import useDrag from '../../../hooks/useDrag'
+import useInitState from '../../../function/useInitState'
 
 type Props = {}
 
