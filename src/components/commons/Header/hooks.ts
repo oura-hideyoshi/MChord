@@ -38,7 +38,9 @@ export const useReactflowLayout = (direction = 'LR') => {
 
     setNodes(nodes)
     setEdges(edges)
-    fitView()
+    setTimeout(() => {
+      fitView()
+    }, 1)
   }
 
   return { cleanLayout }
