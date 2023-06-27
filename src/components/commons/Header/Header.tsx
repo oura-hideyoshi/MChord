@@ -2,14 +2,15 @@ import { Chip, Switch, Tooltip } from '@mui/material'
 import { useDisplayController } from '../../../store'
 import Link from 'next/link'
 import URL from '../../../const/URL'
-import { useReactflowLayout, useStorage } from './hooks'
+import { useReactflowLayout } from './hooks'
+import { useStorage } from '@/hooks/useStorage'
 
 type Props = {}
 
 const Header = ({ ...props }: Props) => {
   const { isRoman, toggleIsRoman } = useDisplayController()
   const { cleanLayout } = useReactflowLayout()
-  const { save, load } = useStorage()
+  const { save, loadAndSet } = useStorage()
 
   return (
     <div className="sticky flex items-center justify-between bg-primary-950 text-white shadow-md shadow-black">
@@ -24,7 +25,7 @@ const Header = ({ ...props }: Props) => {
         <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950 active:translate-y-1" onClick={save}>
           save
         </button>
-        <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950 active:translate-y-1" onClick={load}>
+        <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950 active:translate-y-1" onClick={loadAndSet}>
           load
         </button>
         <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950 active:translate-y-1" onClick={cleanLayout}>
