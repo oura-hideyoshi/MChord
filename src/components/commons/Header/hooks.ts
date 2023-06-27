@@ -2,7 +2,7 @@ import { useReactFlow } from 'reactflow'
 import dagre from 'dagre'
 
 export const useReactflowLayout = (direction = 'LR') => {
-  const { getNodes, getEdges, setNodes, setEdges } = useReactFlow()
+  const { getNodes, getEdges, setNodes, setEdges, fitView } = useReactFlow()
 
   const dagreGraph = new dagre.graphlib.Graph()
   dagreGraph.setDefaultEdgeLabel(() => ({}))
@@ -38,7 +38,7 @@ export const useReactflowLayout = (direction = 'LR') => {
 
     setNodes(nodes)
     setEdges(edges)
-    // return { nodes, edges }
+    fitView()
   }
 
   return { cleanLayout }
