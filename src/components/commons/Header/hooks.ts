@@ -45,3 +45,25 @@ export const useReactflowLayout = (direction = 'LR') => {
 
   return { cleanLayout }
 }
+
+export const useStorage = () => {
+  const { getNodes, getEdges, setNodes, setEdges } = useReactFlow()
+
+  function save() {
+    const nodes = getNodes()
+    const edges = getEdges()
+    localStorage.setItem('nodes', JSON.stringify(nodes))
+    localStorage.setItem('edges', JSON.stringify(edges))
+    console.log(`saved ${nodes.length} nodes and ${edges.length} edges successfully!`)
+  }
+
+  function load() {
+    const nodes = JSON.parse(localStorage.getItem('nodes') || '[]')
+    const edges = JSON.parse(localStorage.getItem('edges') || '[]')
+    setNodes(nodes)
+    setEdges(edges)
+    console.log(`loaded ${nodes.length} nodes and ${edges.length} edges successfully!`)
+  }
+
+  return { save, load }
+}
