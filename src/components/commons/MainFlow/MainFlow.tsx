@@ -1,5 +1,16 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import ReactFlow, { useNodesState, useEdgesState, Connection, addEdge, Background, Controls } from 'reactflow'
+import ReactFlow, {
+  useNodesState,
+  useEdgesState,
+  Connection,
+  addEdge,
+  Background,
+  Controls,
+  getIncomers,
+  getOutgoers,
+  getConnectedEdges,
+  OnNodesDelete,
+} from 'reactflow'
 import useDrag from '../../../hooks/useDrag'
 import useInitState from '../../../function/useInitState'
 import { useStorage } from '@/hooks/useStorage'
@@ -24,6 +35,27 @@ const MainFlow = ({ ...props }: Props) => {
     [setEdges]
   )
 
+  const onNodesDelete: OnNodesDelete = useCallback(
+    (deleted) => {
+      setEdges(
+        deleted.reduce((acc, node) => {
+          const incomers = getIncomers(node, nodes, edges)
+          const outgoers = getOutgoers(node, nodes, edges)
+          const connectedEdges = getConnectedEdges([node], edges)
+
+          const remainingEdges = acc.filter((edge) => !connectedEdges.includes(edge))
+
+          const createdEdges = incomers.flatMap(({ id: source }) =>
+            outgoers.map(({ id: target }) => ({ id: `${source}->${target}`, source, target }))
+          )
+
+          return [...remainingEdges, ...createdEdges]
+        }, edges)
+      )
+    },
+    [setEdges, edges, nodes]
+  )
+
   useEffect(() => {
     loadAndSet()
   }, [])
@@ -34,6 +66,7 @@ const MainFlow = ({ ...props }: Props) => {
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
+        onNodesDelete={onNodesDelete}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDragOver={onDragOver}

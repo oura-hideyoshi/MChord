@@ -4,6 +4,7 @@ import Link from 'next/link'
 import URL from '../../../const/URL'
 import { useReactflowLayout } from './hooks'
 import { useStorage } from '@/hooks/useStorage'
+import { useReactFlow } from 'reactflow'
 
 type Props = {}
 
@@ -11,6 +12,7 @@ const Header = ({ ...props }: Props) => {
   const { isRoman, toggleIsRoman } = useDisplayController()
   const { cleanLayout } = useReactflowLayout()
   const { save, loadAndSet } = useStorage()
+  const { getNodes, getEdges } = useReactFlow()
 
   return (
     <div className="sticky flex items-center justify-between bg-primary-950 text-white shadow-md shadow-black">
@@ -21,6 +23,15 @@ const Header = ({ ...props }: Props) => {
           </Link>
         </Tooltip>
       </h1>
+      <span>
+        dev:
+        <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950" onClick={() => console.log(getNodes())}>
+          nodes
+        </button>
+        <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950" onClick={() => console.log(getEdges())}>
+          edges
+        </button>
+      </span>
       <span className="flex">
         <button className="m-2 rounded-md bg-slate-50 p-2 text-primary-950 active:translate-y-1" onClick={save}>
           save
