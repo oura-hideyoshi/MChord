@@ -2,6 +2,7 @@ import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import useDrag from '../../hooks/useDrag'
 import { useState } from 'react'
 import { Chord } from '@tonaljs/tonal'
+import { Icon } from '@iconify/react'
 
 const ToolBar = () => {
   const [chordName, setChordName] = useState('')
@@ -15,10 +16,10 @@ const ToolBar = () => {
       <div className="flex">
         <ToggleButtonGroup exclusive orientation="vertical" value={0}>
           <ToggleButton className="h-8" value={0}>
-            0
+            <Icon icon={'zondicons:add-outline'} />
           </ToggleButton>
           <ToggleButton className="h-8" value={1}>
-            1
+            <Icon icon={'uil:edit'} />
           </ToggleButton>
           <ToggleButton className="h-8" value={2}>
             2
