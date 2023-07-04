@@ -9,6 +9,7 @@ import { ChordNodeData } from '@/type/NodeData'
 import { useInputState, useShallowEffect } from '@mantine/hooks'
 import { componentController } from '@/states/componentController'
 import { TabsProviderProps } from '@mantine/core/lib/Tabs/TabsProvider'
+import { ChangeEventHandler } from 'react'
 
 const useStyle = createStyles((theme) => ({
   node: {
@@ -108,14 +109,30 @@ const EditNode = () => {
   const { classes } = useStyle()
 
   const [chordName, setChordName] = useInputState('')
+  const { setNodes } = useReactFlow()
+
   let isValidChordName = !Chord.get(chordName).empty
 
   const node = getNode(selectedNodeId) as Node<ChordNodeData> | undefined
 
   useShallowEffect(() => {
     setChordName(node?.data.chordName || '')
-  }, [node])
+  }, [selectedNodeId])
 
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value
+    isValidChordName = !Chord.get(value).empty
+    if (isValidChordName && node) {
+      console.log('value', value)
+      setNodes((nds) => {
+        node.data.chordName = value
+        return nds.map((nd) => (nd.id == selectedNodeId ? node : nd))
+      })
+    }
+    setChordName(value)
+  }
+
+  const isDisabled = selectedNodeId == ''
   return (
     <>
       <Box miw={100}>
@@ -125,7 +142,7 @@ const EditNode = () => {
           </div>
         </Center>
       </Box>
-      <TextInput size="md" value={chordName} onChange={setChordName} />
+      <TextInput disabled={isDisabled} size="md" value={chordName} onChange={onChange} />
     </>
   )
 }

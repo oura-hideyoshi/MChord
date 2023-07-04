@@ -1,5 +1,5 @@
 import { Chord, Progression } from '@tonaljs/tonal'
-import { DragEventHandler, MouseEventHandler, memo, useState } from 'react'
+import { DragEventHandler, MouseEventHandler, useState } from 'react'
 import { Edge, Handle, NodeProps, Position, useNodeId, useReactFlow } from 'reactflow'
 import { ChordNodeData } from '../../type/NodeData'
 import { useDisplayController } from '../../store'
@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
   handle: {},
 }))
 
-const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
+const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   const { isRoman } = useDisplayController()
   const [isOverlapping, setIsOverlapping] = useState(false)
   const nodeId = useNodeId()
@@ -104,7 +104,7 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
       <Handle type="source" position={Position.Right} />
     </>
   )
-})
+}
 
 ChordNode.displayName = 'ChordNode'
 
