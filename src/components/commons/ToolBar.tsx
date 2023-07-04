@@ -1,13 +1,12 @@
 import useDrag from '../../hooks/useDrag'
-import { useState } from 'react'
 import { Chord } from '@tonaljs/tonal'
-import { Box, Center, Input, Paper, Tabs, createStyles, rem } from '@mantine/core'
+import { Box, Center, Paper, Tabs, TextInput, createStyles, rem } from '@mantine/core'
 import { Icon } from '@iconify/react'
 import { useRecoilValue } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
 import { Node, useReactFlow } from 'reactflow'
 import { ChordNodeData } from '@/type/NodeData'
-import { useShallowEffect } from '@mantine/hooks'
+import { useInputState, useShallowEffect } from '@mantine/hooks'
 
 const useStyle = createStyles((theme) => ({
   node: {
@@ -70,8 +69,8 @@ const ToolBar = () => {
 }
 
 const AddNode = () => {
-  const [chordName, setChordName] = useState('')
-  const [key, setKey] = useState('')
+  const [chordName, setChordName] = useInputState('')
+  const [key, setKey] = useInputState('')
   let isValidChordName = !Chord.get(chordName).empty
   const { createDragChordNodeStartFnc } = useDrag()
   const onDragStart = createDragChordNodeStartFnc(chordName, key)
@@ -91,7 +90,7 @@ const AddNode = () => {
           </div>
         </Center>
       </Box>
-      <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+      <TextInput size="md" value={chordName} onChange={setChordName} />
     </>
   )
 }
@@ -101,7 +100,7 @@ const EditNode = () => {
   const { getNode } = useReactFlow()
   const { classes } = useStyle()
 
-  const [chordName, setChordName] = useState('')
+  const [chordName, setChordName] = useInputState('')
   let isValidChordName = !Chord.get(chordName).empty
 
   const node = getNode(selectedNodeId) as Node<ChordNodeData> | undefined
@@ -119,7 +118,7 @@ const EditNode = () => {
           </div>
         </Center>
       </Box>
-      <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+      <TextInput size="md" value={chordName} onChange={setChordName} />
     </>
   )
 }
