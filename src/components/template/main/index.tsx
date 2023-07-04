@@ -1,33 +1,26 @@
 import React from 'react'
 
 import 'reactflow/dist/style.css'
-import Header from '../../commons/Header/Header'
-import { Box } from '@mui/material'
+import Topbar from '../../commons/Header/Header'
 import MainFlow from '../../commons/MainFlow/MainFlow'
 import ToolBar from '../../commons/ToolBar'
 import { Panel, ReactFlowProvider } from 'reactflow'
-import SpeedDial from '../../commons/SpeedDial'
+import { Stack } from '@mantine/core'
 
 type Props = {}
 
-const ChordFlow = ({ ...props }: Props) => {
+const Main = ({ ...props }: Props) => {
   return (
-    <div className="flex h-full flex-col">
+    <Stack h={'100vh'}>
       <ReactFlowProvider>
-        <Header />
-
-        <Box flex={1} position={'relative'}>
-          <MainFlow />
-          <Panel position="bottom-center">
-            <ToolBar />
-          </Panel>
-          <Panel position="bottom-right">
-            <SpeedDial />
-          </Panel>
-        </Box>
+        <Topbar />
+        <MainFlow />
+        <Panel position="bottom-center">
+          <ToolBar />
+        </Panel>
       </ReactFlowProvider>
-    </div>
+    </Stack>
   )
 }
 
-export default ChordFlow
+export default Main

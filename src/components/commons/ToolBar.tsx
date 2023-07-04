@@ -1,8 +1,13 @@
-import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import useDrag from '../../hooks/useDrag'
 import { useState } from 'react'
 import { Chord } from '@tonaljs/tonal'
-import { Icon } from '@iconify/react'
+import { Button, Flex, Input, Paper, createStyles } from '@mantine/core'
+
+const useStyle = createStyles((theme) => ({
+  node: {
+    backgroundColor: theme.colors.smoke,
+  },
+}))
 
 const ToolBar = () => {
   const [chordName, setChordName] = useState('')
@@ -11,49 +16,37 @@ const ToolBar = () => {
   const { createDragChordNodeStartFnc } = useDrag()
   const onDragStart = createDragChordNodeStartFnc(chordName, key)
 
+  const { classes } = useStyle()
+
   return (
-    <aside className="select-none rounded-xl bg-white shadow-xl shadow-gray-500">
-      <div className="flex">
-        <ToggleButtonGroup exclusive orientation="vertical" value={0}>
-          <ToggleButton className="h-8" value={0}>
-            <Icon icon={'zondicons:add-outline'} />
-          </ToggleButton>
-          <ToggleButton className="h-8" value={1}>
-            <Icon icon={'uil:edit'} />
-          </ToggleButton>
-          <ToggleButton className="h-8" value={2}>
-            2
-          </ToggleButton>
-        </ToggleButtonGroup>
+    <Paper shadow="md">
+      <Flex bg={'white'} align={'center'} gap={8}>
+        {/* TODO btn */}
         {/* FIXME これではdimでもいけてしまう*/}
-        <div
-          className={`grid w-24  transition
-        ${isValidChordName && 'hover:-translate-y-4 hover:cursor-grab'}
-        `}
-        >
-          <div
-            className={`grid h-12 scale-100 place-self-center rounded-full
+        <Button.Group orientation="vertical">
+          <Button variant="outline">F</Button>
+          <Button variant="outline">F</Button>
+          <Button variant="outline">F</Button>
+        </Button.Group>
+        <Flex align={'center'} gap={8} p={16}>
+          <div className={classes.node}>
+            <div
+              className={`grid h-12 scale-100 place-self-center rounded-full
              ${
                isValidChordName
                  ? 'bg-primary-500 text-white shadow-md shadow-gray-500'
                  : 'border border-dashed border-primary-500'
              }`}
-            onDragStart={onDragStart}
-            draggable={isValidChordName}
-          >
-            <p className="place-self-center p-1 text-2xl">{isValidChordName ? Chord.get(chordName).symbol : '?'}</p>
+              onDragStart={onDragStart}
+              draggable={isValidChordName}
+            >
+              <p className="place-self-center p-1 text-2xl">{isValidChordName ? Chord.get(chordName).symbol : '?'}</p>
+            </div>
           </div>
-        </div>
-        <div className="grid px-4">
-          <TextField
-            className="place-self-center"
-            size="small"
-            value={chordName}
-            onChange={(e) => setChordName(e.target.value)}
-          />
-        </div>
-      </div>
-    </aside>
+          <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+        </Flex>
+      </Flex>
+    </Paper>
   )
 }
 

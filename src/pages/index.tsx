@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
-import ChordFlow from '../components/template/main'
+import Main from '../components/template/main'
 
 export const index: NextPage = () => {
-  return <ChordFlow />
+  return <Main />
 }
 
 export default index

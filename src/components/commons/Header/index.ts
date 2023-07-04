@@ -1,3 +1,3 @@
-import Header from './Header'
+import Topbar from './Header'
 
-export { Header }
+export { Topbar as Header }

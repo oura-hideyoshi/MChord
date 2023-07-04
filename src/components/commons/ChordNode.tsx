@@ -8,6 +8,18 @@ import { nodeTypeNames } from '../../const/nodeTypes'
 import { createDraftNode } from '../../function/createNode'
 import generateUUID from '../../utils/generateUUID'
 import { Node } from 'reactflow'
+import { Box, createStyles, rem } from '@mantine/core'
+
+const useStyles = createStyles((theme) => ({
+  node: {
+    width: 'fit-content',
+    paddingLeft: rem(16),
+    paddingRight: rem(16),
+    backgroundColor: theme.colors.smoke,
+    borderRadius: rem(100),
+  },
+  handle: {},
+}))
 
 const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   const { isRoman } = useDisplayController()
@@ -17,6 +29,7 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
 
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)
+  const { classes } = useStyles()
 
   // calc display symbol
   let symbol = ''
@@ -62,19 +75,14 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   }
 
   return (
-    <div>
+    <>
       <Handle type="target" position={Position.Left} />
       {/* TODO: nodeをhover時に＋マーク表示 */}
-      <div
-        className={`rounded-full p-2 text-white ${isOverlapping ? 'border border-dashed bg-primary-200' : 'bg-primary-500'}`}
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragLeave}
-        onDrop={onDropNode}
-      >
+      <Box className={classes.node} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDropNode}>
         {symbol}
-      </div>
+      </Box>
       <Handle type="source" position={Position.Right} />
-    </div>
+    </>
   )
 })
 
