@@ -9,6 +9,8 @@ import { createDraftNode } from '../../function/createNode'
 import generateUUID from '../../utils/generateUUID'
 import { Node } from 'reactflow'
 import { Box, createStyles, rem } from '@mantine/core'
+import { useRecoilState } from 'recoil'
+import { nodeSelector } from '@/states/nodeSelector'
 
 const useStyles = createStyles((theme) => ({
   node: {
@@ -26,6 +28,7 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   const [isOverlapping, setIsOverlapping] = useState(false)
   const nodeId = useNodeId()
   const reactFlow = useReactFlow()
+  const [_, setSelectNodeId] = useRecoilState(nodeSelector)
 
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)
@@ -73,12 +76,15 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
     reactFlow.addNodes(targetNode)
     reactFlow.addEdges(newEdge)
   }
+  const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    setSelectNodeId(nodeId!)
+  }
 
   return (
     <>
       <Handle type="target" position={Position.Left} />
       {/* TODO: nodeをhover時に＋マーク表示 */}
-      <Box className={classes.node} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDropNode}>
+      <Box className={classes.node} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDropNode} onClick={onClick}>
         {symbol}
       </Box>
       <Handle type="source" position={Position.Right} />

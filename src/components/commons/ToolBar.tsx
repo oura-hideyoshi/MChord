@@ -3,6 +3,11 @@ import { useState } from 'react'
 import { Chord } from '@tonaljs/tonal'
 import { Box, Center, Input, Paper, Tabs, createStyles, rem } from '@mantine/core'
 import { Icon } from '@iconify/react'
+import { useRecoilValue } from 'recoil'
+import { nodeSelector } from '@/states/nodeSelector'
+import { Node, useReactFlow } from 'reactflow'
+import { ChordNodeData } from '@/type/NodeData'
+import { useShallowEffect } from '@mantine/hooks'
 
 const useStyle = createStyles((theme) => ({
   node: {
@@ -44,12 +49,6 @@ const useStyle = createStyles((theme) => ({
 }))
 
 const ToolBar = () => {
-  const [chordName, setChordName] = useState('')
-  const [key, setKey] = useState('')
-  let isValidChordName = !Chord.get(chordName).empty
-  const { createDragChordNodeStartFnc } = useDrag()
-  const onDragStart = createDragChordNodeStartFnc(chordName, key)
-
   const { classes } = useStyle()
 
   return (
@@ -60,30 +59,68 @@ const ToolBar = () => {
           <Tabs.Tab value="edit" icon={<Icon icon={'uil:edit'} />} />
         </Tabs.List>
         <Tabs.Panel value="add" className={classes.tabPanelContainer}>
-          <Box miw={100}>
-            <Center>
-              <div
-                className={`${classes.node} ${isValidChordName && classes.validNode}`}
-                onDragStart={onDragStart}
-                draggable={isValidChordName}
-              >
-                <span>{isValidChordName ? Chord.get(chordName).symbol : '?'}</span>
-              </div>
-            </Center>
-          </Box>
-          <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+          <AddNode />
         </Tabs.Panel>
         <Tabs.Panel value="edit" className={classes.tabPanelContainer}>
-          <div className={classes.node} onDragStart={onDragStart} draggable={isValidChordName}>
-            <Center>
-              <p>{isValidChordName ? Chord.get(chordName).symbol : '?'}</p>
-            </Center>
-          </div>
-
-          <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+          <EditNode />
         </Tabs.Panel>
       </Tabs>
     </Paper>
+  )
+}
+
+const AddNode = () => {
+  const [chordName, setChordName] = useState('')
+  const [key, setKey] = useState('')
+  let isValidChordName = !Chord.get(chordName).empty
+  const { createDragChordNodeStartFnc } = useDrag()
+  const onDragStart = createDragChordNodeStartFnc(chordName, key)
+
+  const { classes } = useStyle()
+
+  return (
+    <>
+      <Box miw={100}>
+        <Center>
+          <div
+            className={`${classes.node} ${isValidChordName && classes.validNode}`}
+            onDragStart={onDragStart}
+            draggable={isValidChordName}
+          >
+            <span>{isValidChordName ? Chord.get(chordName).symbol : '?'}</span>
+          </div>
+        </Center>
+      </Box>
+      <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+    </>
+  )
+}
+
+const EditNode = () => {
+  const selectedNodeId = useRecoilValue(nodeSelector)
+  const { getNode } = useReactFlow()
+  const { classes } = useStyle()
+
+  const [chordName, setChordName] = useState('')
+  let isValidChordName = !Chord.get(chordName).empty
+
+  const node = getNode(selectedNodeId) as Node<ChordNodeData> | undefined
+
+  useShallowEffect(() => {
+    setChordName(node?.data.chordName || '')
+  }, [node])
+
+  return (
+    <>
+      <Box miw={100}>
+        <Center>
+          <div className={`${classes.node} `}>
+            <span>{isValidChordName ? Chord.get(chordName).symbol : '?'}</span>
+          </div>
+        </Center>
+      </Box>
+      <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+    </>
   )
 }
 

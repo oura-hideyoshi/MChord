@@ -5,6 +5,8 @@ import { useReactflowLayout } from './hooks'
 import { useStorage } from '@/hooks/useStorage'
 import { useReactFlow } from 'reactflow'
 import { Button, Flex, Header, Switch, Text, Tooltip, createStyles, rem } from '@mantine/core'
+import { useRecoilValue } from 'recoil'
+import { nodeSelector } from '@/states/nodeSelector'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -31,6 +33,7 @@ const Topbar = ({ ...props }: Props) => {
   const { cleanLayout } = useReactflowLayout()
   const { save, loadAndSet } = useStorage()
   const { getNodes, getEdges } = useReactFlow()
+  const selectedNodeId = useRecoilValue(nodeSelector)
 
   const { classes } = useStyles()
 
@@ -51,6 +54,7 @@ const Topbar = ({ ...props }: Props) => {
         <Button color="teal" onClick={() => console.log(getEdges())}>
           edges
         </Button>
+        <Text>{selectedNodeId}</Text>
       </Flex>
       <Flex align={'center'} gap={'xs'}>
         <Button color="teal" onClick={save}>
