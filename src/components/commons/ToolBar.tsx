@@ -2,11 +2,13 @@ import useDrag from '../../hooks/useDrag'
 import { Chord } from '@tonaljs/tonal'
 import { Box, Center, Paper, Tabs, TextInput, createStyles, rem } from '@mantine/core'
 import { Icon } from '@iconify/react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
 import { Node, useReactFlow } from 'reactflow'
 import { ChordNodeData } from '@/type/NodeData'
 import { useInputState, useShallowEffect } from '@mantine/hooks'
+import { componentController } from '@/states/componentController'
+import { TabsProviderProps } from '@mantine/core/lib/Tabs/TabsProvider'
 
 const useStyle = createStyles((theme) => ({
   node: {
@@ -49,10 +51,15 @@ const useStyle = createStyles((theme) => ({
 
 const ToolBar = () => {
   const { classes } = useStyle()
+  const [state, setState] = useRecoilState(componentController)
+
+  const onTabChange: TabsProviderProps['onTabChange'] = (v) => {
+    setState({ toolbar: v as 'add' | 'edit' })
+  }
 
   return (
     <Paper shadow="md">
-      <Tabs orientation="vertical" defaultValue={'add'} w={400}>
+      <Tabs orientation="vertical" value={state.toolbar} w={400} onTabChange={onTabChange}>
         <Tabs.List>
           <Tabs.Tab value="add" icon={<Icon icon={'zondicons:add-outline'} />} />
           <Tabs.Tab value="edit" icon={<Icon icon={'uil:edit'} />} />

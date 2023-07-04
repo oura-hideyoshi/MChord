@@ -11,6 +11,7 @@ import { Node } from 'reactflow'
 import { Box, createStyles, rem } from '@mantine/core'
 import { useRecoilState } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
+import { componentController } from '@/states/componentController'
 
 const useStyles = createStyles((theme) => ({
   node: {
@@ -20,6 +21,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.smoke,
     borderRadius: rem(100),
   },
+  highlight: {
+    border: '1px dashed black',
+  },
   handle: {},
 }))
 
@@ -28,7 +32,8 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   const [isOverlapping, setIsOverlapping] = useState(false)
   const nodeId = useNodeId()
   const reactFlow = useReactFlow()
-  const [_, setSelectNodeId] = useRecoilState(nodeSelector)
+  const [selectNodeId, setSelectNodeId] = useRecoilState(nodeSelector)
+  const [_b, setComponentController] = useRecoilState(componentController)
 
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)
@@ -41,6 +46,8 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   } else {
     symbol = chord.empty ? '?' : chord.symbol
   }
+
+  const isSelected = selectNodeId == nodeId
 
   const onDragEnter: MouseEventHandler<HTMLDivElement> = (e) => {
     setIsOverlapping(true)
@@ -78,13 +85,20 @@ const ChordNode = memo(({ ...props }: NodeProps<ChordNodeData>) => {
   }
   const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
     setSelectNodeId(nodeId!)
+    setComponentController({ toolbar: 'edit' })
   }
 
   return (
     <>
       <Handle type="target" position={Position.Left} />
       {/* TODO: nodeをhover時に＋マーク表示 */}
-      <Box className={classes.node} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDropNode} onClick={onClick}>
+      <Box
+        className={`${classes.node} ${isSelected && classes.highlight}`}
+        onDragEnter={onDragEnter}
+        onDragLeave={onDragLeave}
+        onDrop={onDropNode}
+        onClick={onClick}
+      >
         {symbol}
       </Box>
       <Handle type="source" position={Position.Right} />
