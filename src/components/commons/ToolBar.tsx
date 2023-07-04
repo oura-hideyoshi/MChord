@@ -1,11 +1,45 @@
 import useDrag from '../../hooks/useDrag'
 import { useState } from 'react'
 import { Chord } from '@tonaljs/tonal'
-import { Button, Flex, Input, Paper, createStyles } from '@mantine/core'
+import { Box, Center, Input, Paper, Tabs, createStyles, rem } from '@mantine/core'
+import { Icon } from '@iconify/react'
 
 const useStyle = createStyles((theme) => ({
   node: {
+    backgroundColor: theme.colors.white,
+    padding: 2,
+    width: 'fit-content',
+    border: '1px dashed black',
+    borderRadius: 100,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    '& span': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minWidth: 80,
+      height: 40,
+    },
+  },
+  validNode: {
     backgroundColor: theme.colors.smoke,
+    boxShadow: `0px 4px 6px ${theme.colors.gray[5]}`,
+    border: 'none',
+    cursor: 'grab',
+    ':hover': {
+      transition: '100ms',
+      transform: `translateY(${rem(-8)})`,
+    },
+  },
+  tabPanelContainer: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 20,
+    padding: 8,
+    fontWeight: 'bold',
   },
 }))
 
@@ -20,32 +54,35 @@ const ToolBar = () => {
 
   return (
     <Paper shadow="md">
-      <Flex bg={'white'} align={'center'} gap={8}>
-        {/* TODO btn */}
-        {/* FIXME これではdimでもいけてしまう*/}
-        <Button.Group orientation="vertical">
-          <Button variant="outline">F</Button>
-          <Button variant="outline">F</Button>
-          <Button variant="outline">F</Button>
-        </Button.Group>
-        <Flex align={'center'} gap={8} p={16}>
-          <div className={classes.node}>
-            <div
-              className={`grid h-12 scale-100 place-self-center rounded-full
-             ${
-               isValidChordName
-                 ? 'bg-primary-500 text-white shadow-md shadow-gray-500'
-                 : 'border border-dashed border-primary-500'
-             }`}
-              onDragStart={onDragStart}
-              draggable={isValidChordName}
-            >
-              <p className="place-self-center p-1 text-2xl">{isValidChordName ? Chord.get(chordName).symbol : '?'}</p>
-            </div>
-          </div>
+      <Tabs orientation="vertical" defaultValue={'add'} w={400}>
+        <Tabs.List>
+          <Tabs.Tab value="add" icon={<Icon icon={'zondicons:add-outline'} />} />
+          <Tabs.Tab value="edit" icon={<Icon icon={'uil:edit'} />} />
+        </Tabs.List>
+        <Tabs.Panel value="add" className={classes.tabPanelContainer}>
+          <Box miw={100}>
+            <Center>
+              <div
+                className={`${classes.node} ${isValidChordName && classes.validNode}`}
+                onDragStart={onDragStart}
+                draggable={isValidChordName}
+              >
+                <span>{isValidChordName ? Chord.get(chordName).symbol : '?'}</span>
+              </div>
+            </Center>
+          </Box>
           <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
-        </Flex>
-      </Flex>
+        </Tabs.Panel>
+        <Tabs.Panel value="edit" className={classes.tabPanelContainer}>
+          <div className={classes.node} onDragStart={onDragStart} draggable={isValidChordName}>
+            <Center>
+              <p>{isValidChordName ? Chord.get(chordName).symbol : '?'}</p>
+            </Center>
+          </div>
+
+          <Input size="md" value={chordName} onChange={(e) => setChordName(e.target.value)} />
+        </Tabs.Panel>
+      </Tabs>
     </Paper>
   )
 }
