@@ -1,12 +1,15 @@
 import { romanNumerals } from '@/const/interval'
+import { draftChordType, useChordColorMap } from '@/states/chordColorMap'
 import { useDrawerHandler } from '@/states/componentController'
 import { convertToRoman } from '@/utils/converter'
-import { Box, ColorInput, ColorPicker, Drawer as MantineDrawer, Popover, Table } from '@mantine/core'
+import { ActionIcon, Box, ColorInput, ColorPicker, Drawer as MantineDrawer, Popover, Table } from '@mantine/core'
+import React, { useCallback } from 'react'
 
 type Props = {}
 
 const Drawer = ({ ...props }: Props) => {
   const { opened, handler } = useDrawerHandler()
+  const { colors, setColor } = useChordColorMap()
 
   return (
     <MantineDrawer size={'lg'} position="right" opened={opened} onClose={handler.close} withOverlay={false}>
@@ -16,34 +19,30 @@ const Drawer = ({ ...props }: Props) => {
       <MantineDrawer.Body>
         <Table>
           <thead>
+            <th />
             {romanNumerals.map((r) => (
-              <th key={r}>{convertToRoman(r)}</th>
+              <th key={r}>
+                <ActionIcon>{convertToRoman(r)}</ActionIcon>
+              </th>
             ))}
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-              <td>
-                <ColorSelectorCell value="#222222" target={{ alias: '', roman: '' }} />
-              </td>
-            </tr>
+            {draftChordType.map((chord) => (
+              <tr key={chord}>
+                <td>
+                  <ActionIcon>{chord}</ActionIcon>
+                </td>
+                {romanNumerals.map((roman) => (
+                  <td key={roman}>
+                    <ColorSelectorCell
+                      value={colors[roman][chord]}
+                      target={{ alias: chord, roman: roman }}
+                      onChange={(target, color) => setColor(target.roman, target.alias, color)}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </Table>
       </MantineDrawer.Body>
@@ -54,24 +53,28 @@ const Drawer = ({ ...props }: Props) => {
 interface ColorSelectorCellProps {
   value: string
   target: {
-    roman: string
-    alias: string
+    roman: romanNumerals
+    alias: draftChordType
   }
-  onChange?: (target: { roman: string; alias: string }, value: string) => void
+  onChange?: (target: { roman: romanNumerals; alias: draftChordType }, value: string) => void
 }
-const ColorSelectorCell = (props: ColorSelectorCellProps) => {
-  const handleChange = (value: string) => {
-    props.onChange && props.onChange({ roman: props.target.roman, alias: props.target.alias }, value)
-  }
+const ColorSelectorCell = React.memo((props: ColorSelectorCellProps) => {
+  const handleChange = useCallback(
+    (value: string) => {
+      props.onChange && props.onChange({ roman: props.target.roman, alias: props.target.alias }, value)
+    },
+    [props.onChange, props.target]
+  )
+
   return (
     <Popover>
       <Popover.Target>
-        <Box h={20} w={20} sx={(theme) => ({ backgroundColor: 'black', borderRadius: theme.radius.sm })} />
+        <Box h={20} w={20} sx={(theme) => ({ backgroundColor: props.value, borderRadius: theme.radius.sm })} />
       </Popover.Target>
       <Popover.Dropdown>
         <ColorPicker
           format="hex"
-          value={props.value}
+          value={'#fa5252'}
           swatches={[
             '#25262b',
             '#868e96',
@@ -94,6 +97,8 @@ const ColorSelectorCell = (props: ColorSelectorCellProps) => {
       </Popover.Dropdown>
     </Popover>
   )
-}
+})
+
+ColorSelectorCell.displayName = 'ColorSelectorCell'
 
 export default Drawer

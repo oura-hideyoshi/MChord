@@ -15,8 +15,6 @@ export const Roman = {
   vii: 'ⅶ',
 } as const
 
-export type RomanKey = keyof typeof Roman
-
 export const Accidental = {
   '#': '♯',
   b: '♭',

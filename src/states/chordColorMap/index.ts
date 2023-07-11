@@ -1,8 +1,8 @@
 import { romanNumerals } from '@/const/interval'
-import { useSetState } from '@mantine/hooks'
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 
-const draftChordType = ['maj', 'min'] as const
-type draftChordType = (typeof draftChordType)[number]
+export const draftChordType = ['maj', 'min'] as const
+export type draftChordType = (typeof draftChordType)[number]
 
 type chordColorMap = { [key in romanNumerals]: { [key in draftChordType]: string } }
 const defaultChordColorMap: chordColorMap = {
@@ -20,6 +20,20 @@ const defaultChordColorMap: chordColorMap = {
   VII: { maj: '#000000', min: '#000000' },
 }
 
-const useChordColorMap = () => {
-  const [colors, setColors] = useSetState<chordColorMap>(defaultChordColorMap)
+export const chordColorMapAtom = atom<chordColorMap>({
+  key: 'toolbarController',
+  default: defaultChordColorMap,
+})
+
+export const useChordColorMap = () => {
+  const colors = useRecoilValue(chordColorMapAtom)
+  const setColors = useSetRecoilState(chordColorMapAtom)
+
+  const setColor = (roman: romanNumerals, chordType: draftChordType, color: string) => {
+    const newColors = JSON.parse(JSON.stringify(colors))
+    newColors[roman][chordType] = color
+
+    setColors(newColors)
+  }
+  return { colors, setColor }
 }
