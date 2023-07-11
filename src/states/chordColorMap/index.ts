@@ -35,5 +35,22 @@ export const useChordColorMap = () => {
 
     setColors(newColors)
   }
-  return { colors, setColor }
+
+  const setRomanColor = (roman: romanNumerals, color: string) => {
+    const newColors = JSON.parse(JSON.stringify(colors))
+    for (let chordType in newColors[roman]) {
+      newColors[roman][chordType] = color
+    }
+    setColors(newColors)
+  }
+
+  const setChordTypeColor = (chordType: draftChordType, color: string) => {
+    const newColors = JSON.parse(JSON.stringify(colors))
+    for (let roman in newColors) {
+      newColors[roman][chordType] = color
+    }
+    setColors(newColors)
+  }
+
+  return { colors, setColor, setRomanColor, setChordTypeColor }
 }
