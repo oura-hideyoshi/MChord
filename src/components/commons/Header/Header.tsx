@@ -4,9 +4,10 @@ import URL from '../../../const/URL'
 import { useReactflowLayout } from './hooks'
 import { useStorage } from '@/hooks/useStorage'
 import { useReactFlow } from 'reactflow'
-import { Button, Flex, Header, Switch, Text, Tooltip, createStyles, rem } from '@mantine/core'
+import { Burger, Button, Flex, Header, Switch, Text, Tooltip, createStyles, rem } from '@mantine/core'
 import { useRecoilValue } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
+import { useDrawerHandler } from '@/states/componentController'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -34,6 +35,7 @@ const Topbar = ({ ...props }: Props) => {
   const { save, loadAndSet } = useStorage()
   const { getNodes, getEdges } = useReactFlow()
   const selectedNodeId = useRecoilValue(nodeSelector)
+  const { opened, handler } = useDrawerHandler()
 
   const { classes } = useStyles()
 
@@ -77,6 +79,7 @@ const Topbar = ({ ...props }: Props) => {
           />
         </Flex>
       </Flex>
+      <Burger color="white" opened={opened} onClick={handler.toggle} />
     </Header>
   )
 }

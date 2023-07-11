@@ -11,7 +11,7 @@ import { Node } from 'reactflow'
 import { Box, createStyles, rem } from '@mantine/core'
 import { useRecoilState } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
-import { componentController } from '@/states/componentController'
+import { toolbarController } from '@/states/componentController'
 
 const useStyles = createStyles((theme) => ({
   node: {
@@ -33,7 +33,7 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   const nodeId = useNodeId()
   const reactFlow = useReactFlow()
   const [selectNodeId, setSelectNodeId] = useRecoilState(nodeSelector)
-  const [_b, setComponentController] = useRecoilState(componentController)
+  const [_b, setComponentController] = useRecoilState(toolbarController)
 
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)
@@ -85,7 +85,7 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   }
   const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
     setSelectNodeId(nodeId!)
-    setComponentController({ toolbar: 'edit' })
+    setComponentController({ command: 'edit' })
   }
 
   return (

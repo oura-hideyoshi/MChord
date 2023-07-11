@@ -6,6 +6,7 @@ import MainFlow from '../../commons/MainFlow/MainFlow'
 import ToolBar from '../../commons/ToolBar'
 import { Panel, ReactFlowProvider } from 'reactflow'
 import { Stack } from '@mantine/core'
+import Drawer from '@/components/commons/Drawer'
 
 type Props = {}
 
@@ -19,6 +20,7 @@ const Main = ({ ...props }: Props) => {
           <ToolBar />
         </Panel>
       </ReactFlowProvider>
+      <Drawer />
     </Stack>
   )
 }
