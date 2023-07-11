@@ -11,7 +11,7 @@ export const drawerController = atom<{ opened: boolean }>({
 })
 
 export const useDrawerHandler = () => {
-  const opened = useRecoilState(drawerController)
+  const [{ opened }] = useRecoilState(drawerController)
   const setOpened = useSetRecoilState(drawerController)
 
   const handler = {
