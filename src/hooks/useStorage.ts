@@ -24,16 +24,21 @@ export const useStorage = () => {
     console.log(`saved ${nodes.length} nodes and ${edges.length} edges and color map successfully!`)
   }
 
-  function loadAndSet() {
+  function isValidStorage() {
     if (localNodes.length == 0 || localEdges.length == 0 || Object.keys(localChordColorMap).length == 0) return false
+    else return true
+  }
 
-    setNodes(localNodes)
-    setEdges(localEdges)
+  function loadAndSet() {
+    if (isValidStorage()) {
+      setNodes(localNodes)
+      setEdges(localEdges)
 
-    setChordColorMap(localChordColorMap)
-    console.log(`loaded ${localNodes.length} nodes and ${localEdges.length} edges and color map successfully!`)
-
-    return true
+      setChordColorMap(localChordColorMap)
+      console.log(`loaded ${localNodes.length} nodes and ${localEdges.length} edges and color map successfully!`)
+    } else {
+      return true
+    }
   }
 
   function load() {
@@ -47,5 +52,5 @@ export const useStorage = () => {
     }, [localNodes])
   }
 
-  return { save, load, loadAndSet, useInitialLoad }
+  return { save, load, isValidStorage, loadAndSet, useInitialLoad }
 }

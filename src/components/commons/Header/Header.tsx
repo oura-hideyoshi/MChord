@@ -32,7 +32,7 @@ type Props = {}
 const Topbar = ({ ...props }: Props) => {
   const { isRoman, toggleIsRoman } = useDisplayController()
   const { cleanLayout } = useReactflowLayout()
-  const { save, loadAndSet } = useStorage()
+  const { save, loadAndSet, isValidStorage } = useStorage()
   const { getNodes, getEdges } = useReactFlow()
   const selectedNodeId = useRecoilValue(nodeSelector)
   const { opened, handler } = useDrawerHandler()
@@ -62,7 +62,7 @@ const Topbar = ({ ...props }: Props) => {
         <Button color="teal" onClick={save}>
           save
         </Button>
-        <Button color="teal" onClick={loadAndSet}>
+        <Button color="teal" onClick={loadAndSet} disabled={!isValidStorage()}>
           load
         </Button>
         <Button color="teal" onClick={cleanLayout}>
