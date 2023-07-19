@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.1",
     "@mantine/core": "^6.0.16",
     "@mantine/hooks": "^6.0.16",
+    "@mantine/next": "^6.0.16",
     "@tonaljs/tonal": "^4.8.0",
     "@types/node": "18.11.11",
     "@types/react": "18.0.26",
@@ -33,6 +34,7 @@
     "@types/dagre": "^0.7.48",
     "autoprefixer": "^10.4.14",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "next-intercept-stdout": "^1.0.1",
     "prettier": "^2.8.8"
   }
 }
