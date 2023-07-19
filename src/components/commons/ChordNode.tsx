@@ -9,20 +9,24 @@ import { createDraftNode } from '../../function/createNode'
 import generateUUID from '../../utils/generateUUID'
 import { Node } from 'reactflow'
 import { Box, createStyles, rem } from '@mantine/core'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
 import { toolbarController } from '@/states/componentController'
+import { chordColorMapAtom } from '@/states/chordColorMap'
 
 const useStyles = createStyles((theme) => ({
   node: {
     width: 'fit-content',
     paddingLeft: rem(16),
     paddingRight: rem(16),
-    backgroundColor: theme.colors.smoke,
+    backgroundColor: theme.fn.themeColor('smoke'),
     borderRadius: rem(100),
   },
   highlight: {
     border: '1px dashed black',
+  },
+  target: {
+    backgroundColor: theme.fn.themeColor('teal'),
   },
   handle: {},
 }))
@@ -33,7 +37,8 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   const nodeId = useNodeId()
   const reactFlow = useReactFlow()
   const [selectNodeId, setSelectNodeId] = useRecoilState(nodeSelector)
-  const [_b, setComponentController] = useRecoilState(toolbarController)
+  const [_, setComponentController] = useRecoilState(toolbarController)
+  const chordColorMap = useRecoilValue(chordColorMapAtom)
 
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)
@@ -93,7 +98,7 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
       <Handle type="target" position={Position.Left} />
       {/* TODO: nodeをhover時に＋マーク表示 */}
       <Box
-        className={`${classes.node} ${isSelected && classes.highlight}`}
+        className={`${classes.node} ${isSelected && classes.highlight} ${isOverlapping && classes.target}`}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDrop={onDropNode}
