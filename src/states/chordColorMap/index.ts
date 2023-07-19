@@ -21,7 +21,7 @@ const defaultChordColorMap: chordColorMap = {
 }
 
 export const chordColorMapAtom = atom<chordColorMap>({
-  key: 'toolbarController',
+  key: 'chordColorMapAtom',
   default: defaultChordColorMap,
 })
 

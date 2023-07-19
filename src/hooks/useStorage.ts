@@ -1,45 +1,40 @@
-import { useReactFlow } from 'reactflow'
+import { useLocalStorage } from '@mantine/hooks'
+import { useEffect } from 'react'
+import { Edge, Node, useReactFlow } from 'reactflow'
 
 export const useStorage = () => {
   const { getNodes, getEdges, setNodes, setEdges } = useReactFlow()
+  const [localNodes, setLocalNodes] = useLocalStorage<Node[]>({ key: 'nodes', defaultValue: [] })
+  const [localEdges, setLocalEdges] = useLocalStorage<Edge[]>({ key: 'edges', defaultValue: [] })
 
   function save() {
     const nodes = getNodes()
     const edges = getEdges()
-    localStorage.setItem('nodes', JSON.stringify(nodes))
-    localStorage.setItem('edges', JSON.stringify(edges))
+    setLocalNodes(nodes)
+    setLocalEdges(edges)
     console.log(`saved ${nodes.length} nodes and ${edges.length} edges successfully!`)
   }
 
   function loadAndSet() {
-    const nodesStr = localStorage.getItem('nodes')
-    const edgesStr = localStorage.getItem('edges')
-    if (nodesStr == null || edgesStr == null) return false
+    if (localNodes.length == 0 || localEdges.length == 0) return false
 
-    const nodes = JSON.parse(nodesStr)
-    const edges = JSON.parse(edgesStr)
-    setNodes(nodes)
-    setEdges(edges)
-    console.log(`loaded ${nodes.length} nodes and ${edges.length} edges successfully!`)
+    setNodes(localNodes)
+    setEdges(localEdges)
+    console.log(`loaded ${localNodes.length} nodes and ${localEdges.length} edges successfully!`)
 
     return true
   }
 
   function load() {
-    const nodesStr = localStorage.getItem('nodes')
-    const edgesStr = localStorage.getItem('edges')
-
-    const nodes = JSON.parse(nodesStr || '[]')
-    const edges = JSON.parse(edgesStr || '[]')
-
-    return { nodes, edges }
+    return { nodes: localNodes, edges: localEdges }
   }
 
-  function checkStorage() {
-    const nodesStr = localStorage.getItem('nodes')
-    const edgesStr = localStorage.getItem('edges')
-    return nodesStr == null || edgesStr == null
+  function useInitialLoad() {
+    useEffect(() => {
+      loadAndSet()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [localNodes])
   }
 
-  return { save, load, loadAndSet, checkStorage }
+  return { save, load, loadAndSet, useInitialLoad }
 }

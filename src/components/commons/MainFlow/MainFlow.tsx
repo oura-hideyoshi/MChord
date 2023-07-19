@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -14,16 +14,18 @@ import ReactFlow, {
 import useDrag from '../../../hooks/useDrag'
 import useInitState from '../../../function/useInitState'
 import { useStorage } from '@/hooks/useStorage'
+import { useLocalStorage } from '@mantine/hooks'
 
 type Props = {}
 
 const MainFlow = ({ ...props }: Props) => {
   const { initialNodes, initialEdges, nodeTypes } = useInitState()
-  const { loadAndSet } = useStorage()
+  const { useInitialLoad } = useStorage()
 
   const reactFlowWrapper = useRef(null) as any // FIXME
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+  const [_nds] = useLocalStorage({ key: 'nodes' })
 
   const { onDragOver } = useDrag()
 
@@ -56,9 +58,7 @@ const MainFlow = ({ ...props }: Props) => {
     [setEdges, edges, nodes]
   )
 
-  useEffect(() => {
-    loadAndSet()
-  }, [])
+  useInitialLoad()
 
   return (
     <div ref={reactFlowWrapper} style={{ height: '100%', width: '100%' }}>
