@@ -13,6 +13,8 @@ import { useRecoilState } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
 import { toolbarController } from '@/states/componentController'
 import { useChordColorMap } from '@/states/chordColorMap'
+import { isStandardRomanNumerals } from '@/utils/typeGuard'
+import { convertToStandardRoman } from '@/utils/converter'
 
 const useStyles = createStyles((theme) => ({
   node: {
@@ -43,6 +45,13 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)
   const { classes } = useStyles()
+
+  const roman = convertToStandardRoman(Progression.toRomanNumerals(key || '', [chord.tonic || ''])[0]) || ''
+  const chordType = chord.type
+  let color = ''
+  if (isStandardRomanNumerals(roman)) {
+    color = colors[roman]['maj']
+  }
 
   // calc display symbol
   let symbol = ''
@@ -103,6 +112,7 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
         onDragLeave={onDragLeave}
         onDrop={onDropNode}
         onClick={onClick}
+        sx={{ backgroundColor: color }}
       >
         {symbol}
       </Box>

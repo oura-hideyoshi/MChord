@@ -1,5 +1,5 @@
 import { chordColorMap, draftChordType } from '@/type/ChordColorMap'
-import { romanNumerals } from '@/type/interval'
+import { standardRomanNumerals } from '@/type/standardIntervals'
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 
 export const defaultChordColorMap: chordColorMap = {
@@ -26,14 +26,14 @@ export const useChordColorMap = () => {
   const colors = useRecoilValue(chordColorMapAtom)
   const setColors = useSetRecoilState(chordColorMapAtom)
 
-  const setColor = (roman: romanNumerals, chordType: draftChordType, color: string) => {
+  const setColor = (roman: standardRomanNumerals, chordType: draftChordType, color: string) => {
     const newColors = JSON.parse(JSON.stringify(colors))
     newColors[roman][chordType] = color
 
     setColors(newColors)
   }
 
-  const setRomanColor = (roman: romanNumerals, color: string) => {
+  const setRomanColor = (roman: standardRomanNumerals, color: string) => {
     const newColors = JSON.parse(JSON.stringify(colors))
     for (let chordType in newColors[roman]) {
       newColors[roman][chordType] = color

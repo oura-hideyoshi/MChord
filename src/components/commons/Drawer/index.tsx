@@ -1,4 +1,4 @@
-import { romanNumerals } from '@/type/interval'
+import { standardRomanNumerals } from '@/type/standardIntervals'
 import { useChordColorMap } from '@/states/chordColorMap'
 import { useDrawerHandler } from '@/states/componentController'
 import { convertToRoman } from '@/utils/converter'
@@ -45,7 +45,7 @@ const Drawer = ({ ...props }: Props) => {
         <Table>
           <thead>
             <th />
-            {romanNumerals.map((roman) => (
+            {standardRomanNumerals.map((roman) => (
               <th key={roman}>
                 <Popover>
                   <Popover.Target>
@@ -71,7 +71,7 @@ const Drawer = ({ ...props }: Props) => {
                     </Popover.Dropdown>
                   </Popover>
                 </td>
-                {romanNumerals.map((roman) => (
+                {standardRomanNumerals.map((roman) => (
                   <td key={roman}>
                     <ColorSelectorCell
                       value={colors[roman][chord]}
