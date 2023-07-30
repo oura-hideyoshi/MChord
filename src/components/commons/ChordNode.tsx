@@ -9,10 +9,10 @@ import { createDraftNode } from '../../function/createNode'
 import generateUUID from '../../utils/generateUUID'
 import { Node } from 'reactflow'
 import { Box, createStyles, rem } from '@mantine/core'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
 import { toolbarController } from '@/states/componentController'
-import { chordColorMapAtom } from '@/states/chordColorMap'
+import { useChordColorMap } from '@/states/chordColorMap'
 
 const useStyles = createStyles((theme) => ({
   node: {
@@ -38,7 +38,7 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   const reactFlow = useReactFlow()
   const [selectNodeId, setSelectNodeId] = useRecoilState(nodeSelector)
   const [_, setComponentController] = useRecoilState(toolbarController)
-  const chordColorMap = useRecoilValue(chordColorMapAtom)
+  const { colors } = useChordColorMap()
 
   const { chordName, key } = props.data
   const chord = Chord.get(chordName)

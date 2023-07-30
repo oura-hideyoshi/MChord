@@ -12,7 +12,7 @@ import ReactFlow, {
   OnNodesDelete,
 } from 'reactflow'
 import useDrag from '../../../hooks/useDrag'
-import useInitState from '../../../function/useInitState'
+import useInitState from '../../../hooks/useInitState'
 import { useStorage } from '@/hooks/useStorage'
 import { useLocalStorage } from '@mantine/hooks'
 
