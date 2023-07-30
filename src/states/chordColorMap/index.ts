@@ -1,10 +1,7 @@
-import { romanNumerals } from '@/const/interval'
+import { chordColorMap, draftChordType } from '@/type/ChordColorMap'
+import { romanNumerals } from '@/type/interval'
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 
-export const draftChordType = ['maj', 'min'] as const
-export type draftChordType = (typeof draftChordType)[number]
-
-export type chordColorMap = { [key in romanNumerals]: { [key in draftChordType]: string } }
 export const defaultChordColorMap: chordColorMap = {
   I: { maj: '#000000', min: '#000000' },
   ii: { maj: '#000000', min: '#000000' },

@@ -1,9 +1,10 @@
-import { romanNumerals } from '@/const/interval'
-import { draftChordType, useChordColorMap } from '@/states/chordColorMap'
+import { romanNumerals } from '@/type/interval'
+import { useChordColorMap } from '@/states/chordColorMap'
 import { useDrawerHandler } from '@/states/componentController'
 import { convertToRoman } from '@/utils/converter'
 import { ActionIcon, Box, ColorInput, ColorPicker, Drawer as MantineDrawer, Popover, Table } from '@mantine/core'
 import React, { useCallback } from 'react'
+import { draftChordType } from '@/type/ChordColorMap'
 
 const swatches = [
   '#25262b',
