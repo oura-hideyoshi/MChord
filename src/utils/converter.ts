@@ -1,8 +1,9 @@
-import { Roman, RomanKey } from '@/const/charCode'
+import { Roman } from '@/const/charCode'
 
 export function convertToRoman(input: string): string {
   // キーを長さの降順でソート（長いものから順に前方一致をチェック）
-  const keys = (Object.keys(Roman) as RomanKey[]).sort((a, b) => b.length - a.length)
+  const romanKeys = Object.keys(Roman) as unknown as (keyof typeof Roman)[]
+  const keys = romanKeys.sort((a, b) => b.length - a.length)
 
   for (const key of keys) {
     if (input.startsWith(key)) {
