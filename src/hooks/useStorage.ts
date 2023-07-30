@@ -1,4 +1,5 @@
-import { chordColorMap, chordColorMapAtom, defaultChordColorMap } from '@/states/chordColorMap'
+import { chordColorMapAtom, defaultChordColorMap } from '@/states/chordColorMap'
+import { chordColorMap } from '@/type/ChordColorMap'
 import { useLocalStorage, useLogger } from '@mantine/hooks'
 import { useEffect } from 'react'
 import { Edge, Node, useReactFlow } from 'reactflow'
