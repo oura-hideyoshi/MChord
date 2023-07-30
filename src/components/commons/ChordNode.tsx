@@ -8,7 +8,7 @@ import { nodeTypeNames } from '../../const/nodeTypes'
 import { createDraftNode } from '../../function/createNode'
 import generateUUID from '../../utils/generateUUID'
 import { Node } from 'reactflow'
-import { Box, createStyles, rem } from '@mantine/core'
+import { Box, Text, createStyles, rem } from '@mantine/core'
 import { useRecoilState } from 'recoil'
 import { nodeSelector } from '@/states/nodeSelector'
 import { toolbarController } from '@/states/componentController'
@@ -47,11 +47,8 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
   const { classes } = useStyles()
 
   const roman = convertToStandardRoman(Progression.toRomanNumerals(key || '', [chord.tonic || ''])[0]) || ''
-  const chordType = chord.type
-  let color = ''
-  if (isStandardRomanNumerals(roman)) {
-    color = colors[roman]['maj']
-  }
+  const color = isStandardRomanNumerals(roman) ? colors[roman] : '#888'
+  console.log('color', color)
 
   // calc display symbol
   let symbol = ''
@@ -114,7 +111,7 @@ const ChordNode = ({ ...props }: NodeProps<ChordNodeData>) => {
         onClick={onClick}
         sx={{ backgroundColor: color }}
       >
-        {symbol}
+        <Text sx={{ color: color, filter: 'invert(100%) grayscale(100%) contrast(100)' }}>{symbol}</Text>
       </Box>
       <Handle type="source" position={Position.Right} />
     </>
