@@ -15,7 +15,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "dependencies": {
+    "tonal": "^6.0.1"
+  },
   "devDependencies": {
-    "turbo": "^1.13.2"
+    "turbo": "^1.13.2",
+    "typescript": "^5.4.5"
   }
 }
