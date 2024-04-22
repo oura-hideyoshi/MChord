@@ -7,5 +7,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "cSpell.words": ["Mantine", "mchord", "reactflow", "tonaljs", "Zellogy", "zustand"]
+  "cSpell.words": ["Mantine", "mchord", "reactflow", "tonaljs", "typecheck", "Zellogy", "zustand"]
 }
